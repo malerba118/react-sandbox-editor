@@ -3,3 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.tabs-root {
+  background-color: cyan !important;
+  color: white;
+}
+
+.tab-root-text {
+  color: hotpink !important;
+}
+
+.tab-selected {
+  color: white !important;
+}
+
+.tabs-indicator {
+  background-color: orange !important;
+}
+
+.play-button {
+  color: yellow !important;
+}
