@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import {ScriptEditor} from './editors/script-editor/ScriptEditor'
+import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
 import {SandboxInterpreter} from './SandboxInterpreter'
-
+import debounce from 'debounce'
 
 const styles = theme => ({
   root: {
@@ -55,39 +55,78 @@ const styles = theme => ({
   tabsContent: {
     flex: 1,
     position: 'relative'
-  }
+  },
+  playButton: {
+    cursor: 'pointer'
+  },
 });
 
 class StatelessSandbox extends React.Component {
+
+  //oopsies, not quite stateless
   state = {
-    selectedTab: 0,
+    interpreter: {
+      script: '',
+      template: '',
+      stylesheet: ''
+    }
   };
 
   tabNames = ['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']
 
-  handleChange = (event, value) => {
-    this.setState({ selectedTab: value });
+  onTabClick = (event, index) => {
+    this.props.onTabClick(this.tabNames[index])
   };
 
-  getSelectedTabName = () => {
-    return this.tabNames[this.state.selectedTab]
+  componentDidMount() {
+    // run the interpreter on the initial props
+    this.updateInterpreter()
+    // set the initial auto refresh debounce time
+    this.requestInterpreterUpdate = debounce(
+      this.updateInterpreter,
+      this.props.executeOnEditorChangeDebounce
+    )
   }
 
-  onEditorChange = (editorName, value) => {
-    console.log(value)
-    // this.setState({
-    //   [editorName]: value
-    // })
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.executeOnEditorChangeDebounce !== prevProps.executeOnEditorChangeDebounce) {
+      // if auto refresh time has changed, change the debounce time
+      this.requestInterpreterUpdate = debounce(
+        this.updateInterpreter,
+        this.props.executeOnEditorChangeDebounce
+      )
+    }
+    if (
+      (this.props.executeOnEditorChange) &&
+      (this.props.editors.script.value !== prevProps.editors.script.value ||
+      this.props.editors.template.value !== prevProps.editors.template.value ||
+      this.props.editors.stylesheet.value !== prevProps.editors.stylesheet.value)
+    ) {
+      this.requestInterpreterUpdate()
+    }
+  }
+
+  updateInterpreter = () => {
+    this.setState((prevState) => {
+      return {
+        interpreter: {
+          script: this.props.editors.script.value,
+          template: this.props.editors.template.value,
+          stylesheet: this.props.editors.stylesheet.value
+        }
+      }
+    })
   }
 
   render() {
     const { classes } = this.props;
-    const selectedTabName = this.getSelectedTabName()
+    const selectedTabName = this.props.selectedTab
+    console.log(this.props)
     return (
       <div className={classes.root}>
         <Tabs
-          value={this.state.selectedTab}
-          onChange={this.handleChange}
+          value={this.tabNames.indexOf(this.props.selectedTab)}
+          onChange={this.onTabClick}
           classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
         >
           <Tab
@@ -116,17 +155,26 @@ class StatelessSandbox extends React.Component {
           </div>
         </Tabs>
         <div className={classes.tabsContent} id="tabs-content">
-          <ScriptEditor
+          <TemplateEditor
             style={{position: 'absolute', top: 0, zIndex: (selectedTabName === 'templateTab' ? 1 : 0)}}
-            onChange={(value) => this.onEditorChange('template', value)}
+            onChange={(value) => this.props.onEditorChange('template', value)}
+            value={this.props.editors.template.value}
           />
-          <ScriptEditor style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'scriptTab' ? 1 : 0}}/>
-          <ScriptEditor style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0}}/>
+          <ScriptEditor
+            style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'scriptTab' ? 1 : 0}}
+            onChange={(value) => this.props.onEditorChange('script', value)}
+            value={this.props.editors.script.value}
+          />
+          <StylesheetEditor
+            style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0}}
+            onChange={(value) => this.props.onEditorChange('stylesheet', value)}
+            value={this.props.editors.stylesheet.value}
+          />
           <SandboxInterpreter
             style={{position: 'absolute', top: 0, zIndex: 0}}
-            script={`console.log('hi')`}
-            template={`<div>Hello World!</div>`}
-            stylesheet={`div {background: green;}`}
+            script={this.state.interpreter.script}
+            template={this.state.interpreter.template}
+            stylesheet={this.state.interpreter.stylesheet}
           />
         </div>
       </div>
@@ -136,5 +184,11 @@ class StatelessSandbox extends React.Component {
 
 //HOC
 StatelessSandbox = withStyles(styles)(StatelessSandbox)
+
+StatelessSandbox.defaultProps = {
+  executeOnEditorChangeDebounce: 1000,
+  executeOnEditorChange: true,
+  onTabClick: () => {},
+};
 
 export {StatelessSandbox}

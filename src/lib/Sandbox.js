@@ -1,54 +1,79 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
+import withStyles from '@material-ui/core/styles/withStyles';
+import classNames from 'classnames';
+import {StatelessSandbox} from './StatelessSandbox'
 
-export class SandboxInterpreter extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.iframeRef = null
-  }
-
-  buildStylesheet = () => {
-    return (`<style>${this.props.stylesheet}</style>`)
-  }
-
-  buildScript = () => {
-    return (`<script>${this.props.script}</script>`)
-  }
-
-  buildTemplate = () => {
-    return (`<body>${this.props.template}</body>`)
-  }
-
-  buildContents = () => {
-    return (
-      `<html>
-        ${this.buildStylesheet()}
-        ${this.buildScript()}
-        ${this.buildTemplate()}
-       </html>`
-    )
-  }
-
-  componentDidMount() {
-    this.execute()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.script !== this.props.script) {
-      this.execute()
+class Sandbox extends React.Component {
+  state = {
+    selectedTab: 'scriptTab',
+    template: {
+      value: '',
+    },
+    script: {
+      value: '',
+    },
+    stylesheet: {
+      value: '',
     }
-  }
+  };
 
-  execute() {
-    this.iframeRef.contentDocument.open();
-    this.iframeRef.contentDocument.write(this.buildContents());
-    this.iframeRef.contentDocument.close();
+  onTabClick = (value) => {
+    this.setState({ selectedTab: value });
+    this.props.onTabClick(value)
+  };
+
+
+  onEditorChange = (editorName, value) => {
+    this.setState((prevState) => {
+      return {
+        [editorName]: {
+          ...prevState[editorName],
+          value,
+        }
+      }
+    })
+    this.props.onEditorChange(editorName, value)
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <iframe style={{border: 'none'}} ref={(element) => {this.iframeRef = element}} id="frameID" width="100%" height="100%"></iframe>
-    )
+      <StatelessSandbox
+        classes={this.props.classes}
+        onEditorChange={this.onEditorChange}
+        executeOnEditorChange={true}
+        executeOnEditorChangeDebounce={1000}
+        onTabClick={this.onTabClick}
+        selectedTab={this.state.selectedTab}
+        editors={{
+          template: {
+            value: this.state.template.value
+          },
+          script: {
+            value: this.state.script.value,
+          },
+          stylesheet: {
+            value: this.state.stylesheet.value,
+          }
+        }}
+      />
+    );
   }
 }
+
+//HOC
+// Sandbox = withStyles(styles)(Sandbox)
+
+Sandbox.defaultProps = {
+  onEditorChange: () => {},
+  onTabClick: () => {},
+}
+
+export {Sandbox}

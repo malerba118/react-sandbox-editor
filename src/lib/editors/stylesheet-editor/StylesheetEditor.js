@@ -4,7 +4,7 @@ import brace from 'brace';
 import AceEditor from 'react-ace';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import 'brace/mode/javascript';
+import 'brace/mode/css';
 import 'brace/theme/github';
 
 
@@ -12,7 +12,7 @@ const styles = theme => ({
   root: {height: '100% !important', width: '100% !important'}
 });
 
-class ScriptEditor extends React.Component {
+class StylesheetEditor extends React.Component {
 
   //unique number for each instance (for dom id)
   static id = 0
@@ -21,7 +21,7 @@ class ScriptEditor extends React.Component {
     super(props)
 
     this.state = {
-      name: "script-editor-" + ScriptEditor.id++
+      name: "stylesheet-editor-" + StylesheetEditor.id++
     }
   }
 
@@ -32,7 +32,7 @@ class ScriptEditor extends React.Component {
         className={classes.root}
         height="100%"
         style={this.props.style}
-        mode="javascript"
+        mode="css"
         theme="github"
         name={this.state.name}
         value={this.props.value}
@@ -43,6 +43,6 @@ class ScriptEditor extends React.Component {
   }
 }
 
-ScriptEditor = withStyles(styles)(ScriptEditor)
+StylesheetEditor = withStyles(styles)(StylesheetEditor)
 
-export {ScriptEditor}
+export {StylesheetEditor}

@@ -35,7 +35,11 @@ export class SandboxInterpreter extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.script !== this.props.script) {
+    if (
+      prevProps.script !== this.props.script ||
+      prevProps.template !== this.props.template ||
+      prevProps.stylesheet !== this.props.stylesheet
+    ) {
       this.execute()
     }
   }
