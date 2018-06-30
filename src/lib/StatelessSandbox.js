@@ -10,6 +10,9 @@ import classNames from 'classnames';
 import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
 import {SandboxInterpreter} from './SandboxInterpreter'
 import debounce from 'debounce'
+import {withDependencies} from './utils'
+
+const ReactInterpreter = withDependencies(['http://react'])(SandboxInterpreter)
 
 const styles = theme => ({
   root: {
@@ -79,6 +82,7 @@ class StatelessSandbox extends React.Component {
   };
 
   componentDidMount() {
+    this.props.onRef(this)
     // run the interpreter on the initial props
     this.updateInterpreter()
     // set the initial auto refresh debounce time
@@ -86,6 +90,10 @@ class StatelessSandbox extends React.Component {
       this.updateInterpreter,
       this.props.executeOnEditorChangeDebounce
     )
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -106,6 +114,15 @@ class StatelessSandbox extends React.Component {
     }
   }
 
+  execute() {
+    if (this.interpreterRef) {
+      this.interpreterRef.execute()
+    }
+    else {
+      alert('no interpreter ref exists!')
+    }
+  }
+
   updateInterpreter = () => {
     this.setState((prevState) => {
       return {
@@ -121,7 +138,6 @@ class StatelessSandbox extends React.Component {
   render() {
     const { classes } = this.props;
     const selectedTabName = this.props.selectedTab
-    console.log(this.props)
     return (
       <div className={classes.root}>
         <Tabs
@@ -151,7 +167,7 @@ class StatelessSandbox extends React.Component {
           />
           <div className={classes.fill}></div>
           <div className={classNames(classes.center, classes.playButton)}>
-            <PlayCircleOutline />
+            <PlayCircleOutline onClick={this.props.onPlayButtonClick} />
           </div>
         </Tabs>
         <div className={classes.tabsContent} id="tabs-content">
@@ -170,7 +186,8 @@ class StatelessSandbox extends React.Component {
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.editors.stylesheet.value}
           />
-          <SandboxInterpreter
+          <ReactInterpreter
+            onRef={(ref) => {this.interpreterRef = ref}}
             style={{position: 'absolute', top: 0, zIndex: 0}}
             script={this.state.interpreter.script}
             template={this.state.interpreter.template}
@@ -189,6 +206,7 @@ StatelessSandbox.defaultProps = {
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
   onTabClick: () => {},
+  onPlayButtonClick: () => {},
 };
 
 export {StatelessSandbox}

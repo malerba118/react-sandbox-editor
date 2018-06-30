@@ -29,6 +29,11 @@ class Sandbox extends React.Component {
     this.props.onTabClick(value)
   };
 
+  onPlayButtonClick = () => {
+    if (this.statelessSandboxRef) {
+      this.statelessSandboxRef.execute()
+    }
+  }
 
   onEditorChange = (editorName, value) => {
     this.setState((prevState) => {
@@ -46,12 +51,14 @@ class Sandbox extends React.Component {
     const { classes } = this.props;
     return (
       <StatelessSandbox
-        classes={this.props.classes}
+        onRef={(ref) => {this.statelessSandboxRef = ref}}
+        // classes={this.props.classes}
         onEditorChange={this.onEditorChange}
         executeOnEditorChange={true}
         executeOnEditorChangeDebounce={1000}
         onTabClick={this.onTabClick}
         selectedTab={this.state.selectedTab}
+        onPlayButtonClick={this.onPlayButtonClick}
         editors={{
           template: {
             value: this.state.template.value

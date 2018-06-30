@@ -8,6 +8,13 @@ export class SandboxInterpreter extends React.Component {
     this.iframeRef = null
   }
 
+  buildDependencies = () => {
+    return this.props.dependencies.map((dependency) => {
+      return `<script src="${dependency}"></script>`
+    })
+    .join('\n')
+  }
+
   buildStylesheet = () => {
     return (`<style>${this.props.stylesheet}</style>`)
   }
@@ -23,6 +30,7 @@ export class SandboxInterpreter extends React.Component {
   buildContents = () => {
     return (
       `<html>
+        ${this.buildDependencies()}
         ${this.buildStylesheet()}
         ${this.buildScript()}
         ${this.buildTemplate()}
@@ -31,7 +39,12 @@ export class SandboxInterpreter extends React.Component {
   }
 
   componentDidMount() {
+    this.props.onRef(this)
     this.execute()
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
   }
 
   componentDidUpdate(prevProps, prevState) {
