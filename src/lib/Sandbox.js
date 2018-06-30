@@ -30,6 +30,10 @@ class Sandbox extends React.Component {
   };
 
   onPlayButtonClick = () => {
+    this.execute()
+  }
+  
+  execute = () => {
     if (this.statelessSandboxRef) {
       this.statelessSandboxRef.execute()
     }

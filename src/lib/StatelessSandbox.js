@@ -12,7 +12,10 @@ import {SandboxInterpreter} from './SandboxInterpreter'
 import debounce from 'debounce'
 import {withDependencies} from './utils'
 
-const ReactInterpreter = withDependencies(['http://react'])(SandboxInterpreter)
+const ReactInterpreter = withDependencies([
+  'https://unpkg.com/react@16/umd/react.production.min.js',
+  'https://unpkg.com/react-dom@16/umd/react-dom.development.js'
+])(SandboxInterpreter)
 
 const styles = theme => ({
   root: {
@@ -117,9 +120,6 @@ class StatelessSandbox extends React.Component {
   execute() {
     if (this.interpreterRef) {
       this.interpreterRef.execute()
-    }
-    else {
-      alert('no interpreter ref exists!')
     }
   }
 
