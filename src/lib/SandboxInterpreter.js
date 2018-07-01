@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import processors from './processors'
 
 export class SandboxInterpreter extends React.Component {
 
   constructor(props) {
     super(props)
-    this.iframeRef = null
+    this.iframeContainerRef = null
   }
 
   buildDependencies = () => {
@@ -16,15 +17,18 @@ export class SandboxInterpreter extends React.Component {
   }
 
   buildStylesheet = () => {
-    return (`<style>${this.props.stylesheet}</style>`)
+    let stylesheetProcessor = processors.getStylesheetProcessor(this.props.stylesheetMode)
+    return (`<style>${stylesheetProcessor(this.props.stylesheet)}</style>`)
   }
 
   buildScript = () => {
-    return (`<script>${this.props.script}</script>`)
+    let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
+    return (`<script>${scriptProcessor(this.props.script)}</script>`)
   }
 
   buildTemplate = () => {
-    return (`<body>${this.props.template}</body>`)
+    let templateProcessor = processors.getTemplateProcessor(this.props.templateMode)
+    return (`<body>${templateProcessor(this.props.template)}</body>`)
   }
 
   buildContents = () => {
@@ -32,8 +36,8 @@ export class SandboxInterpreter extends React.Component {
       `<html>
         ${this.buildDependencies()}
         ${this.buildStylesheet()}
-        ${this.buildScript()}
         ${this.buildTemplate()}
+        ${this.buildScript()}
        </html>`
     )
   }
@@ -58,16 +62,49 @@ export class SandboxInterpreter extends React.Component {
   }
 
   execute() {
-    this.iframeRef.contentDocument.open();
-    this.iframeRef.contentDocument.write(this.buildContents());
-    this.iframeRef.contentDocument.close();
+    //remove all children
+    while (this.iframeContainerRef.hasChildNodes()) {
+        this.iframeContainerRef.removeChild(this.iframeContainerRef.lastChild);
+    }
+    //create new iframe
+    let iframe = document.createElement('iframe');
+    iframe.height="100%"
+    iframe.width="100%"
+    iframe.style.border="none"
+    //insert it into dom
+    this.iframeContainerRef.appendChild(iframe);
+    try {
+      iframe.contentDocument.open();
+      iframe.contentDocument.write(this.buildContents());
+      iframe.contentDocument.close();
+    }
+    catch (e){
+      console.error(e.name, e.message)
+    }
   }
 
   render() {
     return (
-      <div style={{...this.props.style, height: '100%', width: '100%', background: 'white'}}>
-        <iframe style={{border: 'none'}} ref={(element) => {this.iframeRef = element}} id="frameID" width="100%" height="100%"></iframe>
+      <div
+        ref={(element) => {this.iframeContainerRef = element}}
+        style={{
+          ...this.props.style,
+          height: '100%',
+          width: '100%',
+          background: 'white'
+        }}>
       </div>
     )
   }
+}
+
+SandboxInterpreter.defaultProps = {
+  dependencies: [],
+  script: '',
+  scriptMode: 'js',
+  template: '',
+  templateMode: 'html',
+  stylesheet: '',
+  stylesheetMode: 'css',
+  onRef: () => {}
 }

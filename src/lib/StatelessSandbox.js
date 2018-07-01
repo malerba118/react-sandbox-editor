@@ -10,12 +10,6 @@ import classNames from 'classnames';
 import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
 import {SandboxInterpreter} from './SandboxInterpreter'
 import debounce from 'debounce'
-import {withDependencies} from './utils'
-
-const ReactInterpreter = withDependencies([
-  'https://unpkg.com/react@16/umd/react.production.min.js',
-  'https://unpkg.com/react-dom@16/umd/react-dom.development.js'
-])(SandboxInterpreter)
 
 const styles = theme => ({
   root: {
@@ -31,7 +25,7 @@ const styles = theme => ({
     backgroundColor: '#1890ff',
   },
   tabRoot: {
-    textTransform: 'initial',
+    textTransform: 'uppercase',
     minWidth: 50,
     marginRight: theme.spacing.unit * 2,
     '&:hover': {
@@ -63,7 +57,8 @@ const styles = theme => ({
     position: 'relative'
   },
   playButton: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    padding: 8
   },
 });
 
@@ -148,22 +143,22 @@ class StatelessSandbox extends React.Component {
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="templateTab"
+            label={this.props.editors.template.mode}
           />
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="scriptTab"
+            label={this.props.editors.script.mode}
           />
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="stylesheetTab"
+            label={this.props.editors.stylesheet.mode}
           />
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="resultTab"
+            label="Result"
           />
           <div className={classes.fill}></div>
           <div className={classNames(classes.center, classes.playButton)}>
@@ -186,12 +181,15 @@ class StatelessSandbox extends React.Component {
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.editors.stylesheet.value}
           />
-          <ReactInterpreter
+          <SandboxInterpreter
             onRef={(ref) => {this.interpreterRef = ref}}
             style={{position: 'absolute', top: 0, zIndex: 0}}
             script={this.state.interpreter.script}
+            scriptMode={this.props.editors.script.mode}
             template={this.state.interpreter.template}
+            templateMode={this.props.editors.template.mode}
             stylesheet={this.state.interpreter.stylesheet}
+            stylesheetMode={this.props.editors.stylesheet.mode}
           />
         </div>
       </div>
@@ -203,10 +201,26 @@ class StatelessSandbox extends React.Component {
 StatelessSandbox = withStyles(styles)(StatelessSandbox)
 
 StatelessSandbox.defaultProps = {
+  selectedTab: 'templateTab',
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
   onTabClick: () => {},
   onPlayButtonClick: () => {},
+  editors: {
+    template: {
+      value: '',
+      mode: 'html'
+    },
+    script: {
+      value: '',
+      mode: 'js'
+    },
+    stylesheet: {
+      value: '',
+      mode: 'css'
+    }
+  },
+  dependencies: []
 };
 
 export {StatelessSandbox}

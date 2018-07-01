@@ -32,7 +32,7 @@ class Sandbox extends React.Component {
   onPlayButtonClick = () => {
     this.execute()
   }
-  
+
   execute = () => {
     if (this.statelessSandboxRef) {
       this.statelessSandboxRef.execute()
@@ -65,13 +65,16 @@ class Sandbox extends React.Component {
         onPlayButtonClick={this.onPlayButtonClick}
         editors={{
           template: {
-            value: this.state.template.value
+            value: this.state.template.value,
+            mode: this.props.editors.template.mode
           },
           script: {
             value: this.state.script.value,
+            mode: this.props.editors.script.mode
           },
           stylesheet: {
             value: this.state.stylesheet.value,
+            mode: this.props.editors.stylesheet.mode
           }
         }}
       />
@@ -85,6 +88,21 @@ class Sandbox extends React.Component {
 Sandbox.defaultProps = {
   onEditorChange: () => {},
   onTabClick: () => {},
+  editors: {
+    template: {
+      defaultValue: '',
+      mode: 'html'
+    },
+    script: {
+      defaultValue: '',
+      mode: 'js'
+    },
+    stylesheet: {
+      defaultValue: '',
+      mode: 'css'
+    }
+  },
+  dependencies: []
 }
 
 export {Sandbox}
