@@ -13,6 +13,7 @@ import {StatelessSandbox} from './StatelessSandbox'
 class Sandbox extends React.Component {
   state = {
     selectedTab: 'scriptTab',
+    displayMode: 'tab',
     template: {
       value: '',
     },
@@ -31,6 +32,10 @@ class Sandbox extends React.Component {
 
   onPlayButtonClick = () => {
     this.execute()
+  }
+
+  onDisplayModeButtonClick = (requestedMode) => {
+    this.setState({displayMode: requestedMode})
   }
 
   execute = () => {
@@ -63,7 +68,8 @@ class Sandbox extends React.Component {
         onTabClick={this.onTabClick}
         selectedTab={this.state.selectedTab}
         onPlayButtonClick={this.onPlayButtonClick}
-        resultPosition={this.props.resultPosition}
+        onDisplayModeButtonClick={this.onDisplayModeButtonClick}
+        displayMode={this.state.displayMode}
         editors={{
           template: {
             value: this.state.template.value,
@@ -89,7 +95,7 @@ class Sandbox extends React.Component {
 Sandbox.defaultProps = {
   onEditorChange: () => {},
   onTabClick: () => {},
-  resultPosition: 'tab',
+  displayMode: 'tab',
   editors: {
     template: {
       defaultValue: '',

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
+import TabDisplayIcon from '@material-ui/icons/Tab';
+import SplitScreenDisplayIcon from '@material-ui/icons/ViewStream';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
@@ -26,8 +29,8 @@ const styles = theme => ({
   },
   tabRoot: {
     textTransform: 'uppercase',
-    minWidth: 50,
-    marginRight: theme.spacing.unit * 2,
+    minWidth: 30,
+    marginRight: theme.spacing.unit * 0,
     '&:hover': {
       color: '#40a9ff',
       opacity: 1,
@@ -42,7 +45,7 @@ const styles = theme => ({
   },
   tabSelected: {},
   typography: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 0,
   },
   center: {
     display:'flex',
@@ -56,9 +59,10 @@ const styles = theme => ({
     flex: 1,
     position: 'relative'
   },
-  playButton: {
-    cursor: 'pointer',
-    padding: 8
+  iconButtonRoot: {
+    height: 36,
+    width: 36,
+    margin: 4
   },
 });
 
@@ -78,6 +82,14 @@ class StatelessSandbox extends React.Component {
   onTabClick = (event, index) => {
     this.props.onTabClick(this.tabNames[index])
   };
+
+  onDisplayModeButtonClick = () => {
+    let requestedDisplayMode = 'tab'
+    if (this.props.displayMode === 'tab') {
+      requestedDisplayMode = 'tab'
+    }
+
+  }
 
   componentDidMount() {
     this.props.onRef(this)
@@ -161,8 +173,40 @@ class StatelessSandbox extends React.Component {
             label="Result"
           />
           <div className={classes.fill}></div>
-          <div className={classNames(classes.center, classes.playButton)}>
-            <PlayCircleOutline onClick={this.props.onPlayButtonClick} />
+          <div className={classes.center}>
+            {this.props.displayMode === 'horizontal-split' && (
+                <IconButton
+                disableRipple
+                className={classNames(classes.center, classes.iconButtonRoot)}
+                style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
+                aria-label="sandbox-editor-dispay-mode"
+                onClick={() => this.props.onDisplayModeButtonClick('tab')}
+              >
+                <TabDisplayIcon/>
+                {this.props.displayMode === 'tab' && <SplitScreenDisplayIcon />}
+              </IconButton>
+            )}
+            {this.props.displayMode === 'tab' && (
+                <IconButton
+                disableRipple
+                className={classNames(classes.center, classes.iconButtonRoot)}
+                style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
+                aria-label="sandbox-editor-dispay-mode"
+                onClick={() => this.props.onDisplayModeButtonClick('horizontal-split')}
+              >
+                <SplitScreenDisplayIcon />
+              </IconButton>
+            )}
+          </div>
+          <div className={classes.center}>
+              <IconButton
+                disableRipple
+                className={classNames(classes.center, classes.iconButtonRoot)}
+                aria-label="sandbox-editor-play"
+                onClick={this.props.onPlayButtonClick}
+              >
+                <PlayCircleOutline />
+              </IconButton>
           </div>
         </Tabs>
         <div className={classes.tabsContent} id="tabs-content">
@@ -173,7 +217,7 @@ class StatelessSandbox extends React.Component {
               top: 0,
               zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
               transition: 'height .5s',
-              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('template', value)}
             value={this.props.editors.template.value}
@@ -184,7 +228,7 @@ class StatelessSandbox extends React.Component {
               top: 0,
               zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
               transition: 'height .5s',
-              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
             value={this.props.editors.script.value}
@@ -195,7 +239,7 @@ class StatelessSandbox extends React.Component {
               top: 0,
               zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0,
               transition: 'height .5s',
-              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.editors.stylesheet.value}
@@ -205,8 +249,8 @@ class StatelessSandbox extends React.Component {
             style={{
               position: 'absolute',
               transition: 'all .5s',
-              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
-              top: this.props.resultPosition === 'bottom' ? '50%' : 0,
+              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
+              top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
               zIndex: 0
             }}
             script={this.state.interpreter.script}
@@ -229,9 +273,10 @@ StatelessSandbox.defaultProps = {
   selectedTab: 'templateTab',
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
-  resultPosition: 'tab',
+  displayMode: 'tab',
   onTabClick: () => {},
   onPlayButtonClick: () => {},
+  onDisplayModeButtonClick: () => {},
   editors: {
     template: {
       value: '',

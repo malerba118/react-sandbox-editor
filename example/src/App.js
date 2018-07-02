@@ -10,27 +10,24 @@ const ReactSandbox = withDependencies([
 export default class App extends Component {
 
   state = {
-    resultPosition: 'tab'
+    displayMode: 'tab'
   }
 
   constructor(props) {
     super(props)
-    setTimeout(() => {
-      this.setState({
-        resultPosition: 'bottom'
-      })
-    }, 10000)
   }
 
   render () {
     return (
       <div>
-        <div>
-          <p>This is a paragraph</p>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
           <ReactSandbox
-            resultPosition={this.state.resultPosition}
+            style={{
+              height: 700,
+              width: '100%'
+            }}
+            classes={{root: 'sandbox-root'}}
           />
-          <p style={{background:'yellow'}}>This is another paragraph</p>
         </div>
       </div>
     )
