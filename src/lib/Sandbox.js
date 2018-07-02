@@ -30,6 +30,17 @@ class Sandbox extends React.Component {
     this.props.onTabClick(value)
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.displayMode !== this.state.displayMode &&
+      this.state.displayMode === 'horizontal-split' &&
+      this.state.selectedTab === 'resultTab'
+    ) {
+      //this tab no longer exists, so need to change selected tab
+      this.setState({ selectedTab: 'stylesheetTab' });
+    }
+  }
+
   onPlayButtonClick = () => {
     this.execute()
   }
@@ -70,6 +81,8 @@ class Sandbox extends React.Component {
         onPlayButtonClick={this.onPlayButtonClick}
         onDisplayModeButtonClick={this.onDisplayModeButtonClick}
         displayMode={this.state.displayMode}
+        theme={this.props.theme}
+        dependencies={this.props.dependencies}
         editors={{
           template: {
             value: this.state.template.value,

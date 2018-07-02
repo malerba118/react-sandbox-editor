@@ -25,25 +25,26 @@ const styles = theme => ({
     backgroundColor: '#eee',
   },
   tabsIndicator: {
-    backgroundColor: '#1890ff',
+    backgroundColor: '#5bc0de',
   },
   tabRoot: {
     textTransform: 'uppercase',
+    color: 'rgba(0, 0, 0, 0.54)',
+    opacity: 1,
     minWidth: 30,
     marginRight: theme.spacing.unit * 0,
     '&:hover': {
-      color: '#40a9ff',
-      opacity: 1,
+      color: '#5bc0de',
     },
     '&$tabSelected': {
-      color: '#1890ff',
+      color: '#5bc0de',
       fontWeight: theme.typography.fontWeightMedium,
     },
     '&:focus': {
-      color: '#40a9ff',
+      color: '#5bc0de',
     },
   },
-  tabSelected: {},
+  tabSelected: {color:'#5bc0de'},
   typography: {
     padding: theme.spacing.unit * 0,
   },
@@ -65,6 +66,7 @@ const styles = theme => ({
     margin: 4
   },
 });
+
 
 class StatelessSandbox extends React.Component {
 
@@ -150,7 +152,10 @@ class StatelessSandbox extends React.Component {
         <Tabs
           value={this.tabNames.indexOf(this.props.selectedTab)}
           onChange={this.onTabClick}
-          classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
+          classes={{
+            root: classes.tabsRoot,
+            indicator: classes.tabsIndicator
+          }}
         >
           <Tab
             disableRipple
@@ -167,11 +172,13 @@ class StatelessSandbox extends React.Component {
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
             label={this.props.editors.stylesheet.mode}
           />
-          <Tab
-            disableRipple
-            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="Result"
-          />
+          {this.props.displayMode === 'tab' && (
+            <Tab
+              disableRipple
+              classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+              label="Result"
+            />
+          )}
           <div className={classes.fill}></div>
           <div className={classes.center}>
             {this.props.displayMode === 'horizontal-split' && (
@@ -221,6 +228,7 @@ class StatelessSandbox extends React.Component {
             }}
             onChange={(value) => this.props.onEditorChange('template', value)}
             value={this.props.editors.template.value}
+            theme={this.props.theme}
           />
           <ScriptEditor
             style={{
@@ -232,6 +240,7 @@ class StatelessSandbox extends React.Component {
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
             value={this.props.editors.script.value}
+            theme={this.props.theme}
           />
           <StylesheetEditor
             style={{
@@ -243,6 +252,7 @@ class StatelessSandbox extends React.Component {
             }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.editors.stylesheet.value}
+            theme={this.props.theme}
           />
           <SandboxInterpreter
             onRef={(ref) => {this.interpreterRef = ref}}
@@ -253,6 +263,7 @@ class StatelessSandbox extends React.Component {
               top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
               zIndex: 0
             }}
+            dependencies={this.props.dependencies}
             script={this.state.interpreter.script}
             scriptMode={this.props.editors.script.mode}
             template={this.state.interpreter.template}

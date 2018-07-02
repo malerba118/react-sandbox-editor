@@ -7,7 +7,11 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import 'brace/mode/css';
 import 'brace/theme/github';
-
+import 'brace/theme/tomorrow';
+import 'brace/theme/solarized_light';
+import 'brace/theme/monokai';
+import 'brace/theme/twilight';
+import 'brace/theme/solarized_dark';
 
 const styles = theme => ({
   root: {height: '100%', width: '100%'}
@@ -37,7 +41,7 @@ class StylesheetEditor extends React.Component {
                 height={`${height !== undefined ? height  : '100%'}`}
                 width={`${width !== undefined ? width  : '100%'}`}
                 mode="css"
-                theme="github"
+                theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}
                 onChange={this.props.onChange}

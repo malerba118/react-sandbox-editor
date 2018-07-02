@@ -6,7 +6,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ReactResizeDetector from 'react-resize-detector';
 
 import 'brace/mode/javascript';
+import 'brace/mode/jsx';
+import 'brace/mode/typescript';
 import 'brace/theme/github';
+import 'brace/theme/tomorrow';
+import 'brace/theme/solarized_light';
+import 'brace/theme/monokai';
+import 'brace/theme/twilight';
+import 'brace/theme/solarized_dark';
 
 
 const styles = theme => ({
@@ -28,6 +35,7 @@ class ScriptEditor extends React.Component {
 
   render() {
     const {classes} = this.props
+    console.log(this.props.theme)
     return (
       <div className={classes.root} style={this.props.style}>
         <ReactResizeDetector handleWidth handleHeight>
@@ -37,7 +45,7 @@ class ScriptEditor extends React.Component {
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
                 mode="javascript"
-                theme="github"
+                theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}
                 onChange={this.props.onChange}
