@@ -166,24 +166,49 @@ class StatelessSandbox extends React.Component {
           </div>
         </Tabs>
         <div className={classes.tabsContent} id="tabs-content">
+
           <TemplateEditor
-            style={{position: 'absolute', top: 0, zIndex: (selectedTabName === 'templateTab' ? 1 : 0)}}
+            style={{
+              position: 'absolute',
+              top: 0,
+              zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
+              transition: 'height .5s',
+              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+            }}
             onChange={(value) => this.props.onEditorChange('template', value)}
             value={this.props.editors.template.value}
           />
           <ScriptEditor
-            style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'scriptTab' ? 1 : 0}}
+            style={{
+              position: 'absolute',
+              top: 0,
+              zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
+              transition: 'height .5s',
+              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+            }}
             onChange={(value) => this.props.onEditorChange('script', value)}
             value={this.props.editors.script.value}
           />
           <StylesheetEditor
-            style={{position: 'absolute', top: 0, zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0}}
+            style={{
+              position: 'absolute',
+              top: 0,
+              zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0,
+              transition: 'height .5s',
+              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+            }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.editors.stylesheet.value}
           />
           <SandboxInterpreter
             onRef={(ref) => {this.interpreterRef = ref}}
-            style={{position: 'absolute', top: 0, zIndex: 0}}
+            style={{
+              position: 'absolute',
+              transition: 'all .5s',
+              height: this.props.resultPosition === 'bottom' ? '50%' : '100%',
+              top: this.props.resultPosition === 'bottom' ? '50%' : 0,
+              zIndex: 0
+            }}
             script={this.state.interpreter.script}
             scriptMode={this.props.editors.script.mode}
             template={this.state.interpreter.template}
@@ -204,6 +229,7 @@ StatelessSandbox.defaultProps = {
   selectedTab: 'templateTab',
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
+  resultPosition: 'tab',
   onTabClick: () => {},
   onPlayButtonClick: () => {},
   editors: {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import ExampleComponent from 'react-sandbox-editor'
 import {Sandbox, SandboxInterpreter, withDependencies} from 'react-sandbox-editor'
 
 const ReactSandbox = withDependencies([
@@ -9,41 +8,29 @@ const ReactSandbox = withDependencies([
 ])(Sandbox)
 
 export default class App extends Component {
+
+  state = {
+    resultPosition: 'tab'
+  }
+
+  constructor(props) {
+    super(props)
+    setTimeout(() => {
+      this.setState({
+        resultPosition: 'bottom'
+      })
+    }, 10000)
+  }
+
   render () {
     return (
       <div>
-        {/*<SandboxInterpreter
-          script={`console.log('hi')`}
-          template={`<div>Hello World!</div>`}
-          stylesheet={`div {background: green;}`}
-          scriptType='js'
-          templateType='html'
-          stylesheetType='css'
-        />*/}
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+        <div>
+          <p>This is a paragraph</p>
           <ReactSandbox
-            classes={{
-              tabsRoot:'tabs-root',
-              tabRoot: 'tab-root-text',
-              tabSelected: 'tab-selected',
-              tabsIndicator: 'tabs-indicator',
-              playButton: 'play-button'
-            }}
-            editors={{
-              script: {
-                defaultValue: '',
-                mode: 'jsx'
-              },
-              template: {
-                defaultValue: '',
-                mode: 'html'
-              },
-              stylesheet: {
-                defaultValue: '',
-                mode: 'css'
-              }
-            }}
+            resultPosition={this.state.resultPosition}
           />
+          <p style={{background:'yellow'}}>This is another paragraph</p>
         </div>
       </div>
     )

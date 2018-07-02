@@ -56,13 +56,14 @@ class Sandbox extends React.Component {
     return (
       <StatelessSandbox
         onRef={(ref) => {this.statelessSandboxRef = ref}}
-        // classes={this.props.classes}
+        classes={this.props.classes}
         onEditorChange={this.onEditorChange}
         executeOnEditorChange={true}
         executeOnEditorChangeDebounce={1000}
         onTabClick={this.onTabClick}
         selectedTab={this.state.selectedTab}
         onPlayButtonClick={this.onPlayButtonClick}
+        resultPosition={this.props.resultPosition}
         editors={{
           template: {
             value: this.state.template.value,
@@ -88,6 +89,7 @@ class Sandbox extends React.Component {
 Sandbox.defaultProps = {
   onEditorChange: () => {},
   onTabClick: () => {},
+  resultPosition: 'tab',
   editors: {
     template: {
       defaultValue: '',

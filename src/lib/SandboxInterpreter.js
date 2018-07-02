@@ -88,9 +88,9 @@ export class SandboxInterpreter extends React.Component {
       <div
         ref={(element) => {this.iframeContainerRef = element}}
         style={{
-          ...this.props.style,
           height: '100%',
           width: '100%',
+          ...this.props.style,
           background: 'white'
         }}>
       </div>

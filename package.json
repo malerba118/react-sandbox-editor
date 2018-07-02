@@ -23,7 +23,8 @@
     "@material-ui/icons": "^1.1.0",
     "classnames": "^2.2.6",
     "debounce": "^1.1.0",
-    "react-ace": "^6.1.2"
+    "react-ace": "^6.1.2",
+    "react-resize-detector": "^3.0.1"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
