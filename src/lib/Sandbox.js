@@ -73,6 +73,7 @@ class Sandbox extends React.Component {
       <StatelessSandbox
         onRef={(ref) => {this.statelessSandboxRef = ref}}
         classes={this.props.classes}
+        style={this.props.style}
         onEditorChange={this.onEditorChange}
         executeOnEditorChange={true}
         executeOnEditorChangeDebounce={1000}

@@ -22,11 +22,7 @@ export default class App extends Component {
       <div>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
           <ReactSandbox
-            theme="tomorrow"
-            style={{
-              height: 700,
-              width: '100%'
-            }}
+            theme="monokai"
             editors={{
               template: {
                 defaultValue: '',

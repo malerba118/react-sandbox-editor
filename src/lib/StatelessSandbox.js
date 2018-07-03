@@ -13,40 +13,15 @@ import classNames from 'classnames';
 import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
 import {SandboxInterpreter} from './SandboxInterpreter'
 import debounce from 'debounce'
+import themeStyles from './StatelessSandboxThemes'
 
 const styles = theme => ({
+  ...themeStyles,
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: 400,
     width: 600,
-  },
-  tabsRoot: {
-    backgroundColor: '#eee',
-  },
-  tabsIndicator: {
-    backgroundColor: '#5bc0de',
-  },
-  tabRoot: {
-    textTransform: 'uppercase',
-    color: 'rgba(0, 0, 0, 0.54)',
-    opacity: 1,
-    minWidth: 30,
-    marginRight: theme.spacing.unit * 0,
-    '&:hover': {
-      color: '#5bc0de',
-    },
-    '&$tabSelected': {
-      color: '#5bc0de',
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    '&:focus': {
-      color: '#5bc0de',
-    },
-  },
-  tabSelected: {color:'#5bc0de'},
-  typography: {
-    padding: theme.spacing.unit * 0,
   },
   center: {
     display:'flex',
@@ -59,11 +34,6 @@ const styles = theme => ({
   tabsContent: {
     flex: 1,
     position: 'relative'
-  },
-  iconButtonRoot: {
-    height: 36,
-    width: 36,
-    margin: 4
   },
 });
 
@@ -145,37 +115,60 @@ class StatelessSandbox extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
     const selectedTabName = this.props.selectedTab
+    const tabsClasses = {
+      root: classNames(
+        classes[`${theme}Header`] || classes.defaultHeader,
+        classes.header
+      ),
+      indicator: classNames(
+        classes[`${theme}SelectedTabIndicator`] || classes.defaultSelectedTabIndicator,
+        classes.selectedTabIndicator
+      )
+    }
+    const tabClasses = {
+      root: classNames(
+        classes[`${theme}Tab`] || classes.defaultTab,
+        classes.tab
+      ),
+      selected: classNames(
+        classes[`${theme}SelectedTab`] || classes.defaultSelectedTab,
+        classes.selectedTab
+      )
+    }
+    const iconButtonClasses = classNames(
+      classes.center,
+      classes[`${theme}IconButton`] || classes.defaultIconButton,
+      classes.iconButton
+    )
+
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={this.props.style}>
         <Tabs
           value={this.tabNames.indexOf(this.props.selectedTab)}
           onChange={this.onTabClick}
-          classes={{
-            root: classes.tabsRoot,
-            indicator: classes.tabsIndicator
-          }}
+          classes={tabsClasses}
         >
           <Tab
             disableRipple
-            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+            classes={tabClasses}
             label={this.props.editors.template.mode}
           />
           <Tab
             disableRipple
-            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+            classes={tabClasses}
             label={this.props.editors.script.mode}
           />
           <Tab
             disableRipple
-            classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+            classes={tabClasses}
             label={this.props.editors.stylesheet.mode}
           />
           {this.props.displayMode === 'tab' && (
             <Tab
               disableRipple
-              classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
+              classes={tabClasses}
               label="Result"
             />
           )}
@@ -184,7 +177,7 @@ class StatelessSandbox extends React.Component {
             {this.props.displayMode === 'horizontal-split' && (
                 <IconButton
                 disableRipple
-                className={classNames(classes.center, classes.iconButtonRoot)}
+                className={iconButtonClasses}
                 style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
                 aria-label="sandbox-editor-dispay-mode"
                 onClick={() => this.props.onDisplayModeButtonClick('tab')}
@@ -196,7 +189,7 @@ class StatelessSandbox extends React.Component {
             {this.props.displayMode === 'tab' && (
                 <IconButton
                 disableRipple
-                className={classNames(classes.center, classes.iconButtonRoot)}
+                className={iconButtonClasses}
                 style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
                 aria-label="sandbox-editor-dispay-mode"
                 onClick={() => this.props.onDisplayModeButtonClick('horizontal-split')}
@@ -208,7 +201,7 @@ class StatelessSandbox extends React.Component {
           <div className={classes.center}>
               <IconButton
                 disableRipple
-                className={classNames(classes.center, classes.iconButtonRoot)}
+                className={iconButtonClasses}
                 aria-label="sandbox-editor-play"
                 onClick={this.props.onPlayButtonClick}
               >
