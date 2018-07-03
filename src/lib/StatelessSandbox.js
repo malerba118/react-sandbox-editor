@@ -46,7 +46,8 @@ class StatelessSandbox extends React.Component {
       script: '',
       template: '',
       stylesheet: ''
-    }
+    },
+    displayModeTranistionPending: false
   };
 
   tabNames = ['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']
@@ -76,6 +77,22 @@ class StatelessSandbox extends React.Component {
 
   componentWillUnmount() {
     this.props.onRef(undefined)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.displayMode !== this.props.displayMode &&
+      nextProps.displayMode === 'horizontal-split' &&
+      this.props.selectedTab === 'resultTab'
+    ) {
+      //when switching display modes to horizontal split mode while
+      //the result tab is selected, we want to wait for the transition
+      //before bringing the stylesheet editor to the front
+      this.setState({displayModeTranistionPending: true})
+      setTimeout(() => {
+        this.setState({displayModeTranistionPending: false})
+      }, 450)
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -239,7 +256,7 @@ class StatelessSandbox extends React.Component {
             style={{
               position: 'absolute',
               top: 0,
-              zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0,
+              zIndex: (selectedTabName === 'stylesheetTab') && !this.state.displayModeTranistionPending ? 1 : 0,
               transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
@@ -256,6 +273,7 @@ class StatelessSandbox extends React.Component {
               top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
               zIndex: 0
             }}
+            permissions={this.props.permissions}
             dependencies={this.props.dependencies}
             script={this.state.interpreter.script}
             scriptMode={this.props.editors.script.mode}
@@ -281,6 +299,15 @@ StatelessSandbox.defaultProps = {
   onTabClick: () => {},
   onPlayButtonClick: () => {},
   onDisplayModeButtonClick: () => {},
+  permissions: [
+    'allow-forms',
+    'allow-pointer-lock',
+    'allow-popups',
+    'allow-modals',
+    'allow-same-origin',
+    'allow-scripts',
+    'allow-top-navigation'
+  ],
   editors: {
     template: {
       value: '',
@@ -297,5 +324,19 @@ StatelessSandbox.defaultProps = {
   },
   dependencies: []
 };
+
+StatelessSandbox.propTypes = {
+  permissions: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      'allow-forms',
+      'allow-pointer-lock',
+      'allow-popups',
+      'allow-modals',
+      'allow-same-origin',
+      'allow-scripts',
+      'allow-top-navigation'
+    ])
+  )
+}
 
 export {StatelessSandbox}

@@ -35,7 +35,6 @@ class ScriptEditor extends React.Component {
 
   render() {
     const {classes} = this.props
-    console.log(this.props.theme)
     return (
       <div className={classes.root} style={this.props.style}>
         <ReactResizeDetector handleWidth handleHeight>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {Sandbox, SandboxInterpreter, withDependencies} from 'react-sandbox-editor'
+import {Sandbox, withDependencies} from 'react-sandbox-editor'
 
 const ReactSandbox = withDependencies([
   'https://fb.me/react-15.1.0.js',
@@ -10,11 +10,31 @@ const ReactSandbox = withDependencies([
 export default class App extends Component {
 
   state = {
-    displayMode: 'tab'
+    displayMode: 'tab',
+    template: {
+      defaultValue: '',
+    },
+    script: {
+      defaultValue: '',
+    },
+    stylesheet: {
+      defaultValue: '',
+    }
   }
 
   constructor(props) {
     super(props)
+    setTimeout(() => {
+      this.setState({
+        template: {
+          defaultValue: '<div>blah</div>',
+        }
+      })
+    }, 5000)
+  }
+
+  onEditorChange = (editorName, value) => {
+
   }
 
   render () {
@@ -22,10 +42,12 @@ export default class App extends Component {
       <div>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
           <ReactSandbox
-            theme="tomorrow"
+            onEditorChange={this.onEditorChange}
+            theme="solarized_dark"
+            permissions={['allow-scripts']}
             editors={{
               template: {
-                defaultValue: '',
+                defaultValue: this.state.template.defaultValue,
                 mode: 'html'
               },
               script: {

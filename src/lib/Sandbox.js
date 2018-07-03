@@ -25,6 +25,37 @@ class Sandbox extends React.Component {
     }
   };
 
+  componentWillReceiveProps(nextProps) {
+    //if default values have changed update editor with new default
+    if (
+      nextProps.editors.template.defaultValue !== this.props.editors.template.defaultValue
+    ) {
+      this.setState({
+        template: {
+          value: nextProps.editors.template.defaultValue
+        }
+      })
+    }
+    if (
+      nextProps.editors.script.defaultValue !== this.props.editors.script.defaultValue
+    ) {
+      this.setState({
+        script: {
+          value: nextProps.editors.script.defaultValue
+        }
+      })
+    }
+    if (
+      nextProps.editors.stylesheet.defaultValue !== this.props.editors.stylesheet.defaultValue
+    ) {
+      this.setState({
+        stylesheet: {
+          value: nextProps.editors.stylesheet.defaultValue
+        }
+      })
+    }
+  }
+
   onTabClick = (value) => {
     this.setState({ selectedTab: value });
     this.props.onTabClick(value)
@@ -36,21 +67,20 @@ class Sandbox extends React.Component {
       this.state.displayMode === 'horizontal-split' &&
       this.state.selectedTab === 'resultTab'
     ) {
-      //this tab no longer exists, so need to change selected tab
-      this.setState({ selectedTab: '' }); //trick into animating away
-      setTimeout(() => {
-        //wait for animation to finish before switching tabs
-        this.setState({ selectedTab: 'stylesheetTab' });
-      }, 450)
+      //when switching to split view mode the tab goes
+      //away so we need to switch tabs
+      this.setState({ selectedTab: 'stylesheetTab' });
     }
   }
 
   onPlayButtonClick = () => {
     this.execute()
+    this.props.onPlayButtonClick()
   }
 
   onDisplayModeButtonClick = (requestedMode) => {
     this.setState({displayMode: requestedMode})
+    this.props.onDisplayModeButtonClick(requestedMode)
   }
 
   execute = () => {
@@ -73,21 +103,26 @@ class Sandbox extends React.Component {
 
   render() {
     const { classes } = this.props;
+    //props will override default behavior provided by state
+    const displayMode = this.props.displayMode || this.state.displayMode
+    const selectedTab = this.props.selectedTab || this.state.selectedTab
     return (
       <StatelessSandbox
         onRef={(ref) => {this.statelessSandboxRef = ref}}
         classes={this.props.classes}
         style={this.props.style}
         onEditorChange={this.onEditorChange}
-        executeOnEditorChange={true}
-        executeOnEditorChangeDebounce={1000}
+        executeOnEditorChange={this.props.executeOnEditorChange}
+        executeOnEditorChangeDebounce={this.props.executeOnEditorChangeDebounce}
         onTabClick={this.onTabClick}
-        selectedTab={this.state.selectedTab}
+        selectedTab={selectedTab}
         onPlayButtonClick={this.onPlayButtonClick}
         onDisplayModeButtonClick={this.onDisplayModeButtonClick}
-        displayMode={this.state.displayMode}
+        displayMode={displayMode}
         theme={this.props.theme}
+        permissions={this.props.permissions}
         dependencies={this.props.dependencies}
+        hideDisplayModeButton={this.props.hideDisplayModeButton}
         editors={{
           template: {
             value: this.state.template.value,
@@ -113,7 +148,19 @@ class Sandbox extends React.Component {
 Sandbox.defaultProps = {
   onEditorChange: () => {},
   onTabClick: () => {},
-  displayMode: 'tab',
+  onPlayButtonClick: () => {},
+  onDisplayModeButtonClick: () => {},
+  executeOnEditorChangeDebounce: 1000,
+  executeOnEditorChange: true,
+  permissions: [
+    'allow-forms',
+    'allow-pointer-lock',
+    'allow-popups',
+    'allow-modals',
+    'allow-same-origin',
+    'allow-scripts',
+    'allow-top-navigation'
+  ],
   editors: {
     template: {
       defaultValue: '',
@@ -129,6 +176,20 @@ Sandbox.defaultProps = {
     }
   },
   dependencies: []
+}
+
+Sandbox.propTypes = {
+  permissions: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      'allow-forms',
+      'allow-pointer-lock',
+      'allow-popups',
+      'allow-modals',
+      'allow-same-origin',
+      'allow-scripts',
+      'allow-top-navigation'
+    ])
+  )
 }
 
 export {Sandbox}

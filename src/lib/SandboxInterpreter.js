@@ -68,19 +68,29 @@ export class SandboxInterpreter extends React.Component {
     }
     //create new iframe
     let iframe = document.createElement('iframe');
+    // iframe.addEventListener('load', () => {
+    //   alert('here')
+    //   try {
+    //     iframe.contentDocument.open();
+    //     iframe.contentDocument.write(this.buildContents());
+    //     iframe.contentDocument.close();
+    //   }
+    //   catch (e){
+    //     console.error(e.name, e.message)
+    //   }
+    // }, true)
     iframe.height="100%"
     iframe.width="100%"
+    iframe.sandbox=this.props.permissions.join(' ')
     iframe.style.border="none"
-    //insert it into dom
-    this.iframeContainerRef.appendChild(iframe);
     try {
-      iframe.contentDocument.open();
-      iframe.contentDocument.write(this.buildContents());
-      iframe.contentDocument.close();
+      iframe.srcdoc=this.buildContents()
     }
     catch (e){
       console.error(e.name, e.message)
     }
+    //insert it into dom
+    this.iframeContainerRef.appendChild(iframe);
   }
 
   render() {
@@ -99,6 +109,15 @@ export class SandboxInterpreter extends React.Component {
 }
 
 SandboxInterpreter.defaultProps = {
+  permissions: [
+    'allow-forms',
+    'allow-pointer-lock',
+    'allow-popups',
+    'allow-modals',
+    'allow-same-origin',
+    'allow-scripts',
+    'allow-top-navigation'
+  ],
   dependencies: [],
   script: '',
   scriptMode: 'js',

@@ -79,6 +79,62 @@ const styles = {
       backgroundColor: 'rgba(255,255,255,0.1)',
     },
   },
+  solarized_lightHeader: {
+    backgroundColor: '#0B2027',
+  },
+  solarized_lightSelectedTabIndicator: {
+    backgroundColor: '#62bcfa',
+  },
+  solarized_lightTab: {
+    textTransform: 'uppercase',
+    color: '#FEF7E2',
+    opacity: .8,
+    minWidth: 30,
+    marginRight: 0,
+    '&:hover': {
+      color: '#62bcfa',
+    },
+  },
+  solarized_lightSelectedTab: {
+    color:'#62bcfa',
+  },
+  solarized_lightIconButton: {
+    color: '#FEF7E2',
+    height: 36,
+    width: 36,
+    margin: 4,
+    '&:hover': {
+      backgroundColor: 'rgba(255,255,255,0.1)',
+    },
+  },
+  solarized_darkHeader: {
+    backgroundColor: '#00242e',
+  },
+  solarized_darkSelectedTabIndicator: {
+    backgroundColor: '#62bcfa',
+  },
+  solarized_darkTab: {
+    textTransform: 'uppercase',
+    color: 'rgba(255,255,255,.95)',
+    opacity: 1,
+    minWidth: 30,
+    marginRight: 0,
+    '&:hover': {
+      color: '#62bcfa',
+    },
+  },
+  solarized_darkSelectedTab: {
+    color:'#62bcfa',
+  },
+  solarized_darkIconButton: {
+    color: 'rgba(255,255,255,.95)',
+    height: 36,
+    width: 36,
+    margin: 4,
+    '&:hover': {
+      backgroundColor: 'rgba(255,255,255,0.1)',
+    },
+  },
 };
 
 export default styles
