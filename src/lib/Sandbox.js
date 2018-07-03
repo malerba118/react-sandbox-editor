@@ -12,7 +12,7 @@ import {StatelessSandbox} from './StatelessSandbox'
 
 class Sandbox extends React.Component {
   state = {
-    selectedTab: 'scriptTab',
+    selectedTab: 'templateTab',
     displayMode: 'tab',
     template: {
       value: '',
@@ -37,7 +37,11 @@ class Sandbox extends React.Component {
       this.state.selectedTab === 'resultTab'
     ) {
       //this tab no longer exists, so need to change selected tab
-      this.setState({ selectedTab: 'stylesheetTab' });
+      this.setState({ selectedTab: '' }); //trick into animating away
+      setTimeout(() => {
+        //wait for animation to finish before switching tabs
+        this.setState({ selectedTab: 'stylesheetTab' });
+      }, 450)
     }
   }
 

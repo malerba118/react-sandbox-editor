@@ -51,6 +51,34 @@ const styles = {
       backgroundColor: 'rgba(255,255,255,0.1)',
     },
   },
+  twilightHeader: {
+    backgroundColor: '#1f1f1f',
+  },
+  twilightSelectedTabIndicator: {
+    backgroundColor: '#62bcfa',
+  },
+  twilightTab: {
+    textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.7)',
+    opacity: 1,
+    minWidth: 30,
+    marginRight: 0,
+    '&:hover': {
+      color: '#62bcfa',
+    },
+  },
+  twilightSelectedTab: {
+    color:'#62bcfa',
+  },
+  twilightIconButton: {
+    color: 'white',
+    height: 36,
+    width: 36,
+    margin: 4,
+    '&:hover': {
+      backgroundColor: 'rgba(255,255,255,0.1)',
+    },
+  },
 };
 
 export default styles

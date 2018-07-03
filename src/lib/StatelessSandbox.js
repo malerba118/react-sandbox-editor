@@ -216,7 +216,7 @@ class StatelessSandbox extends React.Component {
               position: 'absolute',
               top: 0,
               zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
-              transition: 'height .5s',
+              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('template', value)}
@@ -228,7 +228,7 @@ class StatelessSandbox extends React.Component {
               position: 'absolute',
               top: 0,
               zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
-              transition: 'height .5s',
+              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
@@ -240,7 +240,7 @@ class StatelessSandbox extends React.Component {
               position: 'absolute',
               top: 0,
               zIndex: selectedTabName === 'stylesheetTab' ? 1 : 0,
-              transition: 'height .5s',
+              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
@@ -251,7 +251,7 @@ class StatelessSandbox extends React.Component {
             onRef={(ref) => {this.interpreterRef = ref}}
             style={{
               position: 'absolute',
-              transition: 'all .5s',
+              transition: 'all .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
               top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
               zIndex: 0
