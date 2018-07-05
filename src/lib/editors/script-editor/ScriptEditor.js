@@ -43,7 +43,7 @@ class ScriptEditor extends React.Component {
               <AceEditor
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
-                mode="javascript"
+                mode={this.props.mode}
                 theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}

@@ -114,21 +114,37 @@ class StatelessSandbox extends React.Component {
   }
 
   execute() {
-    if (this.interpreterRef) {
-      this.interpreterRef.execute()
+    //first just see if interpreter needs it's props udpated
+    let updated = this.updateInterpreter()
+    if (!updated) {
+      //if not, call execute on it
+      if (this.interpreterRef) {
+        this.interpreterRef.execute()
+      }
     }
   }
 
+  //return whether updated or not
   updateInterpreter = () => {
-    this.setState((prevState) => {
-      return {
-        interpreter: {
-          script: this.props.editors.script.value,
-          template: this.props.editors.template.value,
-          stylesheet: this.props.editors.stylesheet.value
+    let editors = this.props.editors
+    let interpreter = this.state.interpreter
+    if (
+      editors.script.value !== interpreter.script ||
+      editors.template.value !== interpreter.template ||
+      editors.stylesheet.value !== interpreter.stylesheet
+    ) {
+      this.setState((prevState) => {
+        return {
+          interpreter: {
+            script: editors.script.value,
+            template: editors.template.value,
+            stylesheet: editors.stylesheet.value
+          }
         }
-      }
-    })
+      })
+      return true
+    }
+    return false
   }
 
   render() {
@@ -137,7 +153,7 @@ class StatelessSandbox extends React.Component {
     const tabsClasses = {
       root: classNames(
         classes[`${theme}Header`] || classes.defaultHeader,
-        classes.header
+        classes.header,
       ),
       indicator: classNames(
         classes[`${theme}SelectedTabIndicator`] || classes.defaultSelectedTabIndicator,
@@ -250,6 +266,7 @@ class StatelessSandbox extends React.Component {
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
             value={this.props.editors.script.value}
+            mode={this.props.editors.script.mode}
             theme={this.props.theme}
           />
           <StylesheetEditor

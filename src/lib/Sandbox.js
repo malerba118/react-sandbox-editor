@@ -25,6 +25,14 @@ class Sandbox extends React.Component {
     }
   };
 
+  componentDidMount() {
+    this.setState({
+      template: {value: this.props.editors.template.defaultValue},
+      script: {value: this.props.editors.script.defaultValue},
+      stylesheet: {value: this.props.editors.stylesheet.defaultValue},
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     //if default values have changed update editor with new default
     if (

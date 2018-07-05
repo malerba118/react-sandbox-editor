@@ -7,7 +7,9 @@
   "dependencies": {
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
+    "react-ace": "^6.1.4",
     "react-dom": "^16.4.0",
+    "react-element-to-jsx-string": "^14.0.1",
     "react-sandbox-editor": "*",
     "react-scripts": "^1.1.1"
   },

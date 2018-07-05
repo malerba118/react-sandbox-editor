@@ -5,8 +5,8 @@ body {
 }
 
 .sandbox-root {
-  width: 60% !important;
-  height: 500px !important;
+  width: 100% !important;
+  height: 70% !important;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
