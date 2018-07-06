@@ -18,7 +18,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import brace from 'brace';
 import AceEditor from 'react-ace';
-
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {Sandbox, withDependencies} from 'react-sandbox-editor'
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import {getReactSandboxUsage} from './utils'
@@ -43,13 +43,31 @@ const possiblePermissions = [
   'allow-top-navigation'
 ]
 
+const theme = createMuiTheme({
+  typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '"Quicksand"',
+      'sans-serif',,
+    ].join(','),
+  },
+  overrides: {
+   MuiInput: {
+     root: {
+       fontSize: '15px',
+     },
+   },
+ },
+});
+
 const styles = (theme) => ({
   toolbar: {
     height: toolbarHeight,
     backgroundColor: '#eee'
   },
   globalSettings: {
-    width: '100%'
+    width: '100%',
+    marginTop: 24
   },
   horizontalForm: {
     display: 'flex',
@@ -58,13 +76,11 @@ const styles = (theme) => ({
   },
   formControl: {
     margin: theme.spacing.unit*1.5,
-    width: 150
+    width: 150,
   },
   leftContent: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     height: '100%',
     boxSizing: 'border-box',
     padding: 48,
@@ -74,8 +90,6 @@ const styles = (theme) => ({
   rightContent: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
     height: '100%',
     boxSizing: 'border-box',
     padding: 48,
@@ -88,13 +102,17 @@ const styles = (theme) => ({
     backgroundColor: 'rgba(0,0,0,0.1)'
   },
   sandboxUsage: {
-    marginTop: 36,
+    marginTop: 24,
     height: '100%',
     width: '100%',
     padding: 24
   },
   'cyan-header': {
     backgroundColor: 'cyan !important',
+  },
+  subtitle: {
+    fontSize: 24,
+    textAlign: 'center'
   }
 })
 
@@ -103,7 +121,7 @@ class App extends Component {
   state = {
     displayMode: 'tab',
     theme: 'solarized_dark',
-    headerClass: '',
+    headerClass: 'none',
     showDisplayButton: true,
     permissions: possiblePermissions,
     executeOnEditorChange: true,
@@ -161,12 +179,15 @@ class App extends Component {
       />
     )
     return (
+      <MuiThemeProvider theme={theme}>
+
       <div className="App" style={{height: '100vh', minWidth: 1300}}>
       <div id="toolbar" className={classes.toolbar}>
 
       </div>
-      <div id="content" style={{display:'flex', height: `calc(100% - ${toolbarHeight}px)`, alignItems: 'center'}}>
+      <div id="content" style={{display:'flex', height: `calc(100% - ${toolbarHeight}px)`, alignItems: 'center', justifyContent: 'center'}}>
         <div id="left-content" className={classes.leftContent}>
+          <p className={classes.subtitle}>Input</p>
           <div id="global-settings" className={classes.globalSettings}>
             <div id="row-1" className={classes.horizontalForm}>
               <FormControl className={classes.formControl}>
@@ -177,6 +198,8 @@ class App extends Component {
                   inputProps={{
                     name: 'Theme',
                     id: 'theme-select',
+                    fontSize: '15px !important',
+
                   }}
                 >
                   <MenuItem value="monokai">
@@ -199,8 +222,8 @@ class App extends Component {
                     id: 'classes-select',
                   }}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem value={'none'}>
+                    None
                   </MenuItem>
                   <MenuItem value={'cyan-header'}>{`cyan-header`}</MenuItem>
                 </Select>
@@ -325,7 +348,7 @@ class App extends Component {
           }
           <div id="sandbox-usage" className={classes.sandboxUsage}>
             <AceEditor
-              height="300px"
+              height="350px"
               width="100%"
               theme="tomorrow"
               mode="jsx"
@@ -333,7 +356,7 @@ class App extends Component {
               name="sandbox-usage-editor"
               readOnly={true}
               showGutter={false}
-              fontSize={12}
+              fontSize={11}
               wrapEnabled={true}
               setOptions={{
                 showLineNumbers: false,
@@ -345,10 +368,12 @@ class App extends Component {
         </div>
         <div className={classes.divider}></div>
         <div id="right-content" className={classes.rightContent}>
+          <p className={classes.subtitle}>Output</p>
           {reactSandbox}
         </div>
       </div>
     </div>
+    </MuiThemeProvider>
     )
   }
 }

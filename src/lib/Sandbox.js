@@ -7,7 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import {StatelessSandbox} from './StatelessSandbox'
+import {StatelessSandbox} from './StatelessSandbox';
+import JssProvider from 'react-jss/lib/JssProvider';
+import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'react-sandbox-editor',
+});
 
 
 class Sandbox extends React.Component {
@@ -115,37 +121,39 @@ class Sandbox extends React.Component {
     const displayMode = this.props.displayMode || this.state.displayMode
     const selectedTab = this.props.selectedTab || this.state.selectedTab
     return (
-      <StatelessSandbox
-        onRef={(ref) => {this.statelessSandboxRef = ref}}
-        classes={this.props.classes}
-        style={this.props.style}
-        onEditorChange={this.onEditorChange}
-        executeOnEditorChange={this.props.executeOnEditorChange}
-        executeOnEditorChangeDebounce={this.props.executeOnEditorChangeDebounce}
-        onTabClick={this.onTabClick}
-        selectedTab={selectedTab}
-        onPlayButtonClick={this.onPlayButtonClick}
-        onDisplayModeButtonClick={this.onDisplayModeButtonClick}
-        displayMode={displayMode}
-        theme={this.props.theme}
-        permissions={this.props.permissions}
-        dependencies={this.props.dependencies}
-        hideDisplayModeButton={this.props.hideDisplayModeButton}
-        editors={{
-          template: {
-            value: this.state.template.value,
-            mode: this.props.editors.template.mode
-          },
-          script: {
-            value: this.state.script.value,
-            mode: this.props.editors.script.mode
-          },
-          stylesheet: {
-            value: this.state.stylesheet.value,
-            mode: this.props.editors.stylesheet.mode
-          }
-        }}
-      />
+      <JssProvider generateClassName={generateClassName}>
+        <StatelessSandbox
+          onRef={(ref) => {this.statelessSandboxRef = ref}}
+          classes={this.props.classes}
+          style={this.props.style}
+          onEditorChange={this.onEditorChange}
+          executeOnEditorChange={this.props.executeOnEditorChange}
+          executeOnEditorChangeDebounce={this.props.executeOnEditorChangeDebounce}
+          onTabClick={this.onTabClick}
+          selectedTab={selectedTab}
+          onPlayButtonClick={this.onPlayButtonClick}
+          onDisplayModeButtonClick={this.onDisplayModeButtonClick}
+          displayMode={displayMode}
+          theme={this.props.theme}
+          permissions={this.props.permissions}
+          dependencies={this.props.dependencies}
+          hideDisplayModeButton={this.props.hideDisplayModeButton}
+          editors={{
+            template: {
+              value: this.state.template.value,
+              mode: this.props.editors.template.mode
+            },
+            script: {
+              value: this.state.script.value,
+              mode: this.props.editors.script.mode
+            },
+            stylesheet: {
+              value: this.state.stylesheet.value,
+              mode: this.props.editors.stylesheet.mode
+            }
+          }}
+        />
+      </JssProvider>
     );
   }
 }
