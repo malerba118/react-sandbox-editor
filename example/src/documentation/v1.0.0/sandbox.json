@@ -1,0 +1,18 @@
+{
+  "props": {
+    "theme": {
+      "type": "string",
+      "acceptedValues": [
+        "solarized_dark",
+        "github"
+      ]
+    }
+  },
+  "methods": {
+    "execute": {
+      "params": [],
+      "returnValue": "React.Component",
+      "description": "Executes code"
+    }
+  }
+}

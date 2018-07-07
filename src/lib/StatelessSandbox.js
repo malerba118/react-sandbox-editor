@@ -20,8 +20,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: 400,
-    width: 600,
+    width: '100%',
+    height: '100%',
+    minWidth: 320,
+    minHeight: 300,
   },
   center: {
     display:'flex',
@@ -175,7 +177,6 @@ class StatelessSandbox extends React.Component {
       classes[`${theme}IconButton`] || classes.defaultIconButton,
       classes.iconButton
     )
-
     return (
       <div className={classes.root} style={this.props.style}>
         <Tabs
