@@ -98,7 +98,9 @@ const styles = (theme) => ({
     maxWidth: '100%',
   },
   divider: {
-    height: '75%',
+    height: 550,
+    marginTop: 160,
+    marginRight: 15,
     width: 2,
     backgroundColor: 'rgba(0,0,0,0.1)'
   },
@@ -181,7 +183,7 @@ class Demo extends Component {
     )
     return (
       <MuiThemeProvider theme={theme}>
-        <div style={{display:'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+        <div className="content-layout">
           <div id="left-content" className={classes.leftContent}>
             <p className={classes.subtitle}>Input</p>
             <div id="global-settings" className={classes.globalSettings}>
@@ -362,7 +364,7 @@ class Demo extends Component {
               />
             </div>
           </div>
-          {/*<div className={classes.divider}></div>*/}
+          <div className={[classes.divider, 'small-screen-hide'].join(' ')}></div>
           <div id="right-content" className={classes.rightContent}>
             <p className={classes.subtitle}>Output</p>
             <div className={'sandbox-container'}>
