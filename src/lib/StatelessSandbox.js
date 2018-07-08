@@ -154,27 +154,27 @@ class StatelessSandbox extends React.Component {
     const selectedTabName = this.props.selectedTab
     const tabsClasses = {
       root: classNames(
-        classes[`${theme}Header`] || classes.defaultHeader,
+        classes[`${theme}Header`],
         classes.header,
       ),
       indicator: classNames(
-        classes[`${theme}SelectedTabIndicator`] || classes.defaultSelectedTabIndicator,
+        classes[`${theme}SelectedTabIndicator`],
         classes.selectedTabIndicator
       )
     }
     const tabClasses = {
       root: classNames(
-        classes[`${theme}Tab`] || classes.defaultTab,
+        classes[`${theme}Tab`],
         classes.tab
       ),
       selected: classNames(
-        classes[`${theme}SelectedTab`] || classes.defaultSelectedTab,
+        classes[`${theme}SelectedTab`],
         classes.selectedTab
       )
     }
     const iconButtonClasses = classNames(
       classes.center,
-      classes[`${theme}IconButton`] || classes.defaultIconButton,
+      classes[`${theme}IconButton`],
       classes.iconButton
     )
     return (

@@ -1,27 +1,13 @@
 const styles = {
-  defaultHeader: {
-    backgroundColor: '#eee',
+  header: {
   },
-  defaultSelectedTabIndicator: {
-    backgroundColor: '#5bc0de',
+  selectedTabIndicator: {
   },
-  defaultTab: {
-    textTransform: 'uppercase',
-    color: 'rgba(0, 0, 0, 0.54)',
-    opacity: 1,
-    minWidth: 30,
-    marginRight: 0,
-    '&:hover': {
-      color: '#5bc0de',
-    },
+  tab: {
   },
-  defaultSelectedTab: {
-    color:'#5bc0de',
+  selectedTab: {
   },
-  defaultIconButton: {
-    height: 36,
-    width: 36,
-    margin: 4
+  iconButton: {
   },
   monokaiHeader: {
     backgroundColor: '#1b1d1a',
@@ -134,6 +120,54 @@ const styles = {
     '&:hover': {
       backgroundColor: 'rgba(255,255,255,0.1)',
     },
+  },
+  tomorrowHeader: {
+    backgroundColor: '#eee',
+  },
+  tomorrowSelectedTabIndicator: {
+    backgroundColor: '#5bc0de',
+  },
+  tomorrowTab: {
+    textTransform: 'uppercase',
+    color: 'rgba(0, 0, 0, 0.54)',
+    opacity: 1,
+    minWidth: 30,
+    marginRight: 0,
+    '&:hover': {
+      color: '#5bc0de',
+    },
+  },
+  tomorrowSelectedTab: {
+    color:'#5bc0de',
+  },
+  tomorrowIconButton: {
+    height: 36,
+    width: 36,
+    margin: 4
+  },
+  githubHeader: {
+    backgroundColor: '#eee',
+  },
+  githubSelectedTabIndicator: {
+    backgroundColor: '#5bc0de',
+  },
+  githubTab: {
+    textTransform: 'uppercase',
+    color: 'rgba(0, 0, 0, 0.54)',
+    opacity: 1,
+    minWidth: 30,
+    marginRight: 0,
+    '&:hover': {
+      color: '#5bc0de',
+    },
+  },
+  githubSelectedTab: {
+    color:'#5bc0de',
+  },
+  githubIconButton: {
+    height: 36,
+    width: 36,
+    margin: 4
   },
 };
 

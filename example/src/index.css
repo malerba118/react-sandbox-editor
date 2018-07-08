@@ -22,33 +22,7 @@ body {
 
 .sandbox-container {
   width: 100% !important;
-  height: 450px !important;
+  height: 420px !important;
   margin-top: 72px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.sandbox-root {
-  width: 320px !important;
-  height: 450px !important;
-}
-
-.tabs-root {
-  background-color: cyan !important;
-  color: white;
-}
-
-.tab-root-text {
-  color: hotpink !important;
-}
-
-.tab-selected {
-  color: white !important;
-}
-
-.tabs-indicator {
-  background-color: orange !important;
-}
-
-.icon-button-root {
-  color: yellow !important;
 }

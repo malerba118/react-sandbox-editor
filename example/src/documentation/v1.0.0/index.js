@@ -1,8 +1,11 @@
-import sandbox from './sandbox'
+import Sandbox from './Sandbox'
+import StatelessSandbox from './StatelessSandbox'
+
 
 export default {
   "components": {
-    sandbox
+    Sandbox,
+    StatelessSandbox
   },
   "utilities": {
     withDependencies: ""

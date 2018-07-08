@@ -84,7 +84,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     height: '100%',
     boxSizing: 'border-box',
-    padding: '4%',
+    padding: '3% 4%',
     flex: 1,
     maxWidth: '100%',
   },
@@ -93,13 +93,13 @@ const styles = (theme) => ({
     flexDirection: 'column',
     height: '100%',
     boxSizing: 'border-box',
-    padding: '4%',
+    padding: '3% 4%',
     flex: 1,
     maxWidth: '100%',
   },
   divider: {
     height: 550,
-    marginTop: 160,
+    marginTop: 145,
     marginRight: 15,
     width: 2,
     backgroundColor: 'rgba(0,0,0,0.1)'
@@ -115,7 +115,8 @@ const styles = (theme) => ({
   },
   subtitle: {
     fontSize: 24,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'rgba(0,0,0,.6)'
   }
 })
 
@@ -264,8 +265,11 @@ class Demo extends Component {
                   </FormGroup>
                 </FormControl>
                 <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="debounce-select">Update Debounce</InputLabel>
+                  <InputLabel htmlFor="debounce-select">
+                    Update Debounce
+                  </InputLabel>
                   <Select
+                    disabled={!this.state.executeOnEditorChange}
                     onChange={(e) => this.onSelectChange('executeOnEditorChangeDebounce', e.target.value)}
                     value={this.state.executeOnEditorChangeDebounce}
                     inputProps={{
