@@ -42,22 +42,6 @@ const possiblePermissions = [
   'allow-top-navigation'
 ]
 
-const theme = createMuiTheme({
-  typography: {
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '"Quicksand"',
-      'sans-serif',,
-    ].join(','),
-  },
-  overrides: {
-   MuiInput: {
-     root: {
-       fontSize: '15px',
-     },
-   },
- },
-});
 
 const styles = (theme) => ({
   toolbar: {
@@ -183,7 +167,6 @@ class Demo extends Component {
       />
     )
     return (
-      <MuiThemeProvider theme={theme}>
         <div className="content-layout">
           <div id="left-content" className={classes.leftContent}>
             <p className={classes.subtitle}>Input</p>
@@ -376,7 +359,6 @@ class Demo extends Component {
             </div>
           </div>
       </div>
-    </MuiThemeProvider>
     )
   }
 }

@@ -14,13 +14,20 @@ const theme = createMuiTheme({
     // Use the system font instead of the default Roboto font.
     fontFamily: [
       '"Quicksand"',
-      'sans-serif',
+      'sans-serif'
     ].join(','),
   },
   overrides: {
    MuiInput: {
      root: {
        fontSize: '14px',
+       color: 'rgba(0,0,0,.6)'
+     },
+   },
+   MuiTypography: {
+     body1: {
+       fontSize: '14px',
+       color: 'rgba(0,0,0,.6)'
      },
    },
  },
