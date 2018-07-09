@@ -14,6 +14,8 @@ body {
   height: 420px !important;
   margin-top: 64px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 975px) {
