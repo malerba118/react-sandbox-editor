@@ -47,7 +47,7 @@ const styles = theme => ({
     paddingLeft: 8,
     borderBottom: '1px solid rgba(255,255,255,.2)',
     // backgroundColor: '#f2f2f2',
-    color: 'rgba(0,0,0,.6)',
+    color: 'rgba(0,0,0,.65)',
     textTransform: 'capitalize',
     minWidth: 776
   }

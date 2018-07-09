@@ -16,7 +16,7 @@ class Doc extends Component {
     else {
       return (
         <div style={{padding: '5% 10%'}}>
-          <Typography variant="display1" gutterBottom style={{marginBottom: 36}}>
+          <Typography variant="display1" gutterBottom style={{marginBottom: 36, color: 'rgba(0,0,0,.65)'}}>
             Components
           </Typography>
           {Object.keys(doc.components).map((componentName, i) => (

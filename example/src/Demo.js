@@ -101,7 +101,7 @@ const styles = (theme) => ({
   subtitle: {
     fontSize: 24,
     textAlign: 'center',
-    color: 'rgba(0,0,0,.6)'
+    color: 'rgba(0,0,0,.65)'
   }
 })
 
