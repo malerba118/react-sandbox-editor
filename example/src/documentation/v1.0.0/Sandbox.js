@@ -112,40 +112,63 @@ export default {
         tab,
         selectedTab,
         iconButton,
-        monokaiHeader,
-        monokaiSelectedTabIndicator,
-        monokaiTab,
-        monokaiSelectedTab,
-        monokaiIconButton,
-        twilightHeader,
-        twilightSelectedTabIndicator,
-        twilightTab,
-        twilightSelectedTab,
-        twilightIconButton,
-        solarized_lightHeader,
-        solarized_lightSelectedTabIndicator,
-        solarized_lightTab,
-        solarized_lightSelectedTab,
-        solarized_lightIconButton,
-        solarized_darkHeader,
-        solarized_darkSelectedTabIndicator,
-        solarized_darkTab,
-        solarized_darkSelectedTab,
-        solarized_darkIconButton,
-        tomorrowHeader,
-        tomorrowSelectedTabIndicator,
-        tomorrowTab,
-        tomorrowSelectedTab,
-        tomorrowIconButton,
-        githubHeader,
-        githubSelectedTabIndicator,
-        githubTab,
-        githubSelectedTab,
-        githubIconButton}`
+        <theme_name>Header,
+        <theme_name>SelectedTabIndicator,
+        <theme_name>Tab,
+        <theme_name>SelectedTab,
+        <theme_name>IconButton}`
       ],
       defaultValue: '{}',
-      description: 'Overrides styles (may need to use !important to override some).'
-    }
+      description: 'Overrides styles globally/per theme (may need to use !important to override some).'
+    },
+    templateEditor: {
+      type: 'object',
+      acceptedValues: [
+        `{
+          defaultValue: string,
+          mode: oneOf(['html']),
+          readOnly: boolean
+        }`
+      ],
+      defaultValue: `{
+        defaultValue: '',
+        mode: 'html',
+        readOnly: false
+      }`,
+      description: 'Template editor options.'
+    },
+    scriptEditor: {
+      type: 'object',
+      acceptedValues: [
+        `{
+          defaultValue: string,
+          mode: oneOf(['javascript', 'jsx']),
+          readOnly: boolean
+        }`
+      ],
+      defaultValue: `{
+        defaultValue: '',
+        mode: 'javascript',
+        readOnly: false
+      }`,
+      description: 'Template editor options.'
+    },
+    stylesheetEditor: {
+      type: 'object',
+      acceptedValues: [
+        `{
+          defaultValue: string,
+          mode: oneOf(['css']),
+          readOnly: boolean
+        }`
+      ],
+      defaultValue: `{
+        defaultValue: '',
+        mode: 'css',
+        readOnly: false
+      }`,
+      description: 'Template editor options.'
+    },
   },
   methods: {
     execute: {

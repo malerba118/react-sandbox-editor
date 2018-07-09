@@ -41,6 +41,8 @@ class StylesheetEditor extends React.Component {
                 height={`${height !== undefined ? height  : '100%'}`}
                 width={`${width !== undefined ? width  : '100%'}`}
                 mode="css"
+                focus={true}
+                readOnly={this.props.readOnly}
                 theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}

@@ -33,38 +33,38 @@ class Sandbox extends React.Component {
 
   componentDidMount() {
     this.setState({
-      template: {value: this.props.editors.template.defaultValue},
-      script: {value: this.props.editors.script.defaultValue},
-      stylesheet: {value: this.props.editors.stylesheet.defaultValue},
+      template: {value: this.props.templateEditor.defaultValue},
+      script: {value: this.props.scriptEditor.defaultValue},
+      stylesheet: {value: this.props.stylesheetEditor.defaultValue},
     })
   }
 
   componentWillReceiveProps(nextProps) {
     //if default values have changed update editor with new default
     if (
-      nextProps.editors.template.defaultValue !== this.props.editors.template.defaultValue
+      nextProps.templateEditor.defaultValue !== this.props.templateEditor.defaultValue
     ) {
       this.setState({
         template: {
-          value: nextProps.editors.template.defaultValue
+          value: nextProps.templateEditor.defaultValue
         }
       })
     }
     if (
-      nextProps.editors.script.defaultValue !== this.props.editors.script.defaultValue
+      nextProps.scriptEditor.defaultValue !== this.props.scriptEditor.defaultValue
     ) {
       this.setState({
         script: {
-          value: nextProps.editors.script.defaultValue
+          value: nextProps.scriptEditor.defaultValue
         }
       })
     }
     if (
-      nextProps.editors.stylesheet.defaultValue !== this.props.editors.stylesheet.defaultValue
+      nextProps.stylesheetEditor.defaultValue !== this.props.stylesheetEditor.defaultValue
     ) {
       this.setState({
         stylesheet: {
-          value: nextProps.editors.stylesheet.defaultValue
+          value: nextProps.stylesheetEditor.defaultValue
         }
       })
     }
@@ -138,19 +138,17 @@ class Sandbox extends React.Component {
           permissions={this.props.permissions}
           dependencies={this.props.dependencies}
           hideDisplayModeButton={this.props.hideDisplayModeButton}
-          editors={{
-            template: {
-              value: this.state.template.value,
-              mode: this.props.editors.template.mode
-            },
-            script: {
-              value: this.state.script.value,
-              mode: this.props.editors.script.mode
-            },
-            stylesheet: {
-              value: this.state.stylesheet.value,
-              mode: this.props.editors.stylesheet.mode
-            }
+          templateEditor={{
+            ...this.props.templateEditor,
+            value: this.state.template.value,
+          }}
+          scriptEditor={{
+            ...this.props.scriptEditor,
+            value: this.state.script.value,
+          }}
+          stylesheetEditor={{
+            ...this.props.stylesheetEditor,
+            value: this.state.stylesheet.value,
           }}
         />
       </JssProvider>
@@ -166,6 +164,7 @@ Sandbox.defaultProps = {
   onTabClick: () => {},
   onPlayButtonClick: () => {},
   onDisplayModeButtonClick: () => {},
+  theme: 'solarized_dark',
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
   permissions: [
@@ -177,19 +176,20 @@ Sandbox.defaultProps = {
     'allow-scripts',
     'allow-top-navigation'
   ],
-  editors: {
-    template: {
-      defaultValue: '',
-      mode: 'html'
-    },
-    script: {
-      defaultValue: '',
-      mode: 'js'
-    },
-    stylesheet: {
-      defaultValue: '',
-      mode: 'css'
-    }
+  templateEditor: {
+    defaultValue: '',
+    mode: 'html',
+    readOnly: false
+  },
+  scriptEditor: {
+    defaultValue: '',
+    mode: 'js',
+    readOnly: false
+  },
+  stylesheetEditor: {
+    defaultValue: '',
+    mode: 'css',
+    readOnly: false
   },
   dependencies: []
 }
@@ -205,7 +205,23 @@ Sandbox.propTypes = {
       'allow-scripts',
       'allow-top-navigation'
     ])
-  )
+  ),
+  templateEditor: PropTypes.shape({
+    defaultValue: PropTypes.string,
+    mode: PropTypes.oneOf(['html']),
+    readOnly: PropTypes.bool
+  }),
+  scriptEditor: PropTypes.shape({
+    defaultValue: PropTypes.string,
+    mode: PropTypes.oneOf(['javascript', 'jsx']),
+    readOnly: PropTypes.bool
+  }),
+  stylesheetEditor: PropTypes.shape({
+    defaultValue: PropTypes.string,
+    mode: PropTypes.oneOf(['css']),
+    readOnly: PropTypes.bool
+  }),
+  dependencies: PropTypes.arrayOf(PropTypes.string),
 }
 
 export {Sandbox}
