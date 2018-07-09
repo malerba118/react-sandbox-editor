@@ -82,8 +82,9 @@ const styles = (theme) => ({
     maxWidth: '100%',
   },
   divider: {
-    height: 550,
-    marginTop: 145,
+    height: '75vh',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     marginRight: 15,
     width: 2,
     backgroundColor: 'rgba(0,0,0,0.1)'
@@ -146,22 +147,16 @@ class Demo extends Component {
         executeOnEditorChange={this.state.executeOnEditorChange}
         executeOnEditorChangeDebounce={this.state.executeOnEditorChangeDebounce}
         hideDisplayModeButton={!this.state.showDisplayButton}
-        editors={{
-          template: {
-            defaultValue: `<div id="root"></div>`,
-            mode: 'html'
-          },
-          script: {
-            defaultValue: `ReactDOM.render(
+        templateEditor={{
+          defaultValue: `<div id="root"></div>`,
+          mode: 'html'
+        }}
+        scriptEditor={{
+          defaultValue: `ReactDOM.render(
   <h1>Hello, world!</h1>,
   document.getElementById('root')
 );`,
-            mode: 'jsx'
-          },
-          stylesheet: {
-            defaultValue: '',
-            mode: 'css'
-          },
+          mode: 'jsx'
         }}
         classes={{header: classes[this.state.headerClass]}}
       />
@@ -351,6 +346,7 @@ class Demo extends Component {
               />
             </div>
           </div>
+
           <div className={[classes.divider, 'small-screen-hide'].join(' ')}></div>
           <div id="right-content" className={classes.rightContent}>
             <p className={classes.subtitle}>Output</p>

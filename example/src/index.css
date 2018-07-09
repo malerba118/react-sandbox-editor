@@ -9,6 +9,13 @@ body {
     justify-content: center;
 }
 
+.sandbox-container {
+  width: 100% !important;
+  height: 420px !important;
+  margin-top: 64px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 @media only screen and (max-width: 975px) {
     .content-layout {
         display:flex;
@@ -18,11 +25,7 @@ body {
     .small-screen-hide {
       display: none;
     }
-}
-
-.sandbox-container {
-  width: 100% !important;
-  height: 420px !important;
-  margin-top: 72px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .sandbox-container {
+      margin-top: 48px;
+    }
 }

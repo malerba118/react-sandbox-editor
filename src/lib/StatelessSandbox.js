@@ -107,9 +107,9 @@ class StatelessSandbox extends React.Component {
     }
     if (
       (this.props.executeOnEditorChange) &&
-      (this.props.editors.script.value !== prevProps.editors.script.value ||
-      this.props.editors.template.value !== prevProps.editors.template.value ||
-      this.props.editors.stylesheet.value !== prevProps.editors.stylesheet.value)
+      (this.props.scriptEditor.value !== prevProps.scriptEditor.value ||
+      this.props.templateEditor.value !== prevProps.templateEditor.value ||
+      this.props.stylesheetEditor.value !== prevProps.stylesheetEditor.value)
     ) {
       this.requestInterpreterUpdate()
     }
@@ -128,19 +128,19 @@ class StatelessSandbox extends React.Component {
 
   //return whether updated or not
   updateInterpreter = () => {
-    let editors = this.props.editors
+    const {templateEditor, scriptEditor, stylesheetEditor} = this.props
     let interpreter = this.state.interpreter
     if (
-      editors.script.value !== interpreter.script ||
-      editors.template.value !== interpreter.template ||
-      editors.stylesheet.value !== interpreter.stylesheet
+      scriptEditor.value !== interpreter.script ||
+      templateEditor.value !== interpreter.template ||
+      stylesheetEditor.value !== interpreter.stylesheet
     ) {
       this.setState((prevState) => {
         return {
           interpreter: {
-            script: editors.script.value,
-            template: editors.template.value,
-            stylesheet: editors.stylesheet.value
+            script: scriptEditor.value,
+            template: templateEditor.value,
+            stylesheet: stylesheetEditor.value
           }
         }
       })
@@ -187,17 +187,17 @@ class StatelessSandbox extends React.Component {
           <Tab
             disableRipple
             classes={tabClasses}
-            label={this.props.editors.template.mode}
+            label={this.props.templateEditor.mode}
           />
           <Tab
             disableRipple
             classes={tabClasses}
-            label={this.props.editors.script.mode}
+            label={this.props.scriptEditor.mode}
           />
           <Tab
             disableRipple
             classes={tabClasses}
-            label={this.props.editors.stylesheet.mode}
+            label={this.props.stylesheetEditor.mode}
           />
           {this.props.displayMode === 'tab' && (
             <Tab
@@ -254,7 +254,8 @@ class StatelessSandbox extends React.Component {
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('template', value)}
-            value={this.props.editors.template.value}
+            value={this.props.templateEditor.value}
+            readOnly={this.props.templateEditor.readOnly}
             theme={this.props.theme}
           />
           <ScriptEditor
@@ -266,8 +267,9 @@ class StatelessSandbox extends React.Component {
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
-            value={this.props.editors.script.value}
-            mode={this.props.editors.script.mode}
+            value={this.props.scriptEditor.value}
+            readOnly={this.props.scriptEditor.readOnly}
+            mode={this.props.scriptEditor.mode}
             theme={this.props.theme}
           />
           <StylesheetEditor
@@ -279,7 +281,8 @@ class StatelessSandbox extends React.Component {
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
-            value={this.props.editors.stylesheet.value}
+            value={this.props.stylesheetEditor.value}
+            readOnly={this.props.stylesheetEditor.readOnly}
             theme={this.props.theme}
           />
           <SandboxInterpreter
@@ -294,11 +297,11 @@ class StatelessSandbox extends React.Component {
             permissions={this.props.permissions}
             dependencies={this.props.dependencies}
             script={this.state.interpreter.script}
-            scriptMode={this.props.editors.script.mode}
+            scriptMode={this.props.scriptEditor.mode}
             template={this.state.interpreter.template}
-            templateMode={this.props.editors.template.mode}
+            templateMode={this.props.templateEditor.mode}
             stylesheet={this.state.interpreter.stylesheet}
-            stylesheetMode={this.props.editors.stylesheet.mode}
+            stylesheetMode={this.props.stylesheetEditor.mode}
           />
         </div>
       </div>
@@ -310,6 +313,7 @@ class StatelessSandbox extends React.Component {
 StatelessSandbox = withStyles(styles)(StatelessSandbox)
 
 StatelessSandbox.defaultProps = {
+  theme: 'solarized_dark',
   selectedTab: 'templateTab',
   executeOnEditorChangeDebounce: 1000,
   executeOnEditorChange: true,
@@ -326,19 +330,20 @@ StatelessSandbox.defaultProps = {
     'allow-scripts',
     'allow-top-navigation'
   ],
-  editors: {
-    template: {
-      value: '',
-      mode: 'html'
-    },
-    script: {
-      value: '',
-      mode: 'js'
-    },
-    stylesheet: {
-      value: '',
-      mode: 'css'
-    }
+  templateEditor: {
+    value: '',
+    mode: 'html',
+    readOnly: false
+  },
+  scriptEditor: {
+    value: '',
+    mode: 'js',
+    readOnly: false
+  },
+  stylesheetEditor: {
+    value: '',
+    mode: 'css',
+    readOnly: false
   },
   dependencies: []
 };
@@ -354,7 +359,23 @@ StatelessSandbox.propTypes = {
       'allow-scripts',
       'allow-top-navigation'
     ])
-  )
+  ),
+  templateEditor: PropTypes.shape({
+    value: PropTypes.string,
+    mode: PropTypes.oneOf(['html']),
+    readOnly: PropTypes.bool
+  }),
+  scriptEditor: PropTypes.shape({
+    value: PropTypes.string,
+    mode: PropTypes.oneOf(['javascript', 'jsx']),
+    readOnly: PropTypes.bool
+  }),
+  stylesheetEditor: PropTypes.shape({
+    value: PropTypes.string,
+    mode: PropTypes.oneOf(['css']),
+    readOnly: PropTypes.bool
+  }),
+  dependencies: PropTypes.arrayOf(PropTypes.string),
 }
 
 export {StatelessSandbox}

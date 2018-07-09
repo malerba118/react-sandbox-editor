@@ -53,7 +53,7 @@ const styles = theme => ({
   }
 });
 
-function CustomizedTable(props) {
+function ComponentDocumentation(props) {
   const { classes } = props;
   const component = props.component
   return (
@@ -121,8 +121,8 @@ function CustomizedTable(props) {
   );
 }
 
-CustomizedTable.propTypes = {
+ComponentDocumentation.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomizedTable);
+export default withStyles(styles)(ComponentDocumentation);
