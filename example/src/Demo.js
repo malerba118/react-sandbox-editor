@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ReactDOM from 'react-dom'
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,9 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import brace from 'brace';
 import AceEditor from 'react-ace';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {Sandbox, withDependencies} from 'react-sandbox-editor'
-import reactElementToJSXString from 'react-element-to-jsx-string';
 import {getReactSandboxUsage} from './utils'
 import 'brace/mode/jsx';
 import 'brace/theme/kuroir';
@@ -117,10 +109,6 @@ class Demo extends Component {
     executeOnEditorChangeDebounce: 1000,
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   onEditorChange = (editorName, value) => {
 
   }
@@ -149,14 +137,16 @@ class Demo extends Component {
         hideDisplayModeButton={!this.state.showDisplayButton}
         templateEditor={{
           defaultValue: `<div id="root"></div>`,
-          mode: 'html'
+          mode: 'html',
+          readOnly: false
         }}
         scriptEditor={{
           defaultValue: `ReactDOM.render(
   <h1>Hello, world!</h1>,
   document.getElementById('root')
 );`,
-          mode: 'jsx'
+          mode: 'jsx',
+          readOnly: false
         }}
         classes={{header: classes[this.state.headerClass]}}
       />

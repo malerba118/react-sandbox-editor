@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ReactResizeDetector from 'react-resize-detector';
+import classNames from 'classnames';
 
 import 'brace/mode/html';
 import 'brace/theme/github';
@@ -34,7 +36,7 @@ class TemplateEditor extends React.Component {
   render() {
     const {classes} = this.props
     return (
-      <div className={classes.root} style={this.props.style}>
+      <div className={classNames(classes.root, this.props.className)} style={this.props.style}>
         <ReactResizeDetector handleWidth handleHeight>
           {(width, height) => {
             return (
@@ -59,5 +61,28 @@ class TemplateEditor extends React.Component {
 }
 
 TemplateEditor = withStyles(styles)(TemplateEditor)
+
+TemplateEditor.defaultProps = {
+  mode: 'html',
+  readOnly: false,
+  theme: 'solarized_dark',
+  value: '',
+  onChange: () => {}
+}
+
+TemplateEditor.propTypes = {
+  mode: PropTypes.oneOf(['html']),
+  readOnly: PropTypes.bool,
+  theme: PropTypes.oneOf([
+    'solarized_dark',
+    'solarized_light',
+    'twilight',
+    'tomorrow',
+    'github',
+    'monokai',
+  ]),
+  value: PropTypes.string,
+  onChange: PropTypes.func
+}
 
 export {TemplateEditor}

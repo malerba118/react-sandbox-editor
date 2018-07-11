@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ReactResizeDetector from 'react-resize-detector';
+import classNames from 'classnames';
 
 import 'brace/mode/javascript';
 import 'brace/mode/jsx';
@@ -36,7 +38,7 @@ class ScriptEditor extends React.Component {
   render() {
     const {classes} = this.props
     return (
-      <div className={classes.root} style={this.props.style}>
+      <div className={classNames(classes.root, this.props.className)} style={this.props.style}>
         <ReactResizeDetector handleWidth handleHeight>
           {(width, height) => {
             return (
@@ -61,5 +63,28 @@ class ScriptEditor extends React.Component {
 }
 
 ScriptEditor = withStyles(styles)(ScriptEditor)
+
+ScriptEditor.defaultProps = {
+  mode: 'javascript',
+  readOnly: false,
+  theme: 'solarized_dark',
+  value: '',
+  onChange: () => {}
+}
+
+ScriptEditor.propTypes = {
+  mode: PropTypes.oneOf(['javascript', 'jsx']),
+  readOnly: PropTypes.bool,
+  theme: PropTypes.oneOf([
+    'solarized_dark',
+    'solarized_light',
+    'twilight',
+    'tomorrow',
+    'github',
+    'monokai',
+  ]),
+  value: PropTypes.string,
+  onChange: PropTypes.func
+}
 
 export {ScriptEditor}

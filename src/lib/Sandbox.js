@@ -156,9 +156,6 @@ class Sandbox extends React.Component {
   }
 }
 
-//HOC
-// Sandbox = withStyles(styles)(Sandbox)
-
 Sandbox.defaultProps = {
   onEditorChange: () => {},
   onTabClick: () => {},
@@ -221,6 +218,23 @@ Sandbox.propTypes = {
     mode: PropTypes.oneOf(['css']),
     readOnly: PropTypes.bool
   }),
+  onEditorChange: PropTypes.func,
+  onTabClick: PropTypes.func,
+  onPlayButtonClick: PropTypes.func,
+  onDisplayModeButtonClick: PropTypes.func,
+  theme: PropTypes.oneOf([
+    'solarized_dark',
+    'solarized_light',
+    'twilight',
+    'tomorrow',
+    'github',
+    'monokai',
+  ]),
+  executeOnEditorChangeDebounce: PropTypes.number,
+  executeOnEditorChange: PropTypes.bool,
+  hideDisplayModeButton: PropTypes.bool,
+  selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
+  displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),
   dependencies: PropTypes.arrayOf(PropTypes.string),
 }
 

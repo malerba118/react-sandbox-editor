@@ -3,7 +3,12 @@ import babel from '@babel/standalone';
 function getScriptProcessor(mode) {
   if (mode === 'jsx') {
     return (code) => {
-      return babel.transform(code, {presets:['react']}).code
+      return babel.transform(code, {
+        "presets": [
+          ["stage-0", { "decoratorsLegacy": true }],
+          "react"
+        ]
+      }).code
     }
   }
   else {

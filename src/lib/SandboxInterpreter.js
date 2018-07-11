@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import processors from './processors'
 
 export class SandboxInterpreter extends React.Component {
@@ -17,18 +18,39 @@ export class SandboxInterpreter extends React.Component {
   }
 
   buildStylesheet = () => {
+    let stylesheet = ''
     let stylesheetProcessor = processors.getStylesheetProcessor(this.props.stylesheetMode)
-    return (`<style>${stylesheetProcessor(this.props.stylesheet)}</style>`)
+    try {
+      stylesheet = stylesheetProcessor(this.props.stylesheet)
+    }
+    catch (e){
+      console.error(e)
+    }
+    return (`<style>${stylesheet}</style>`)
   }
 
   buildScript = () => {
+    let script = ''
     let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
-    return (`<script>${scriptProcessor(this.props.script)}</script>`)
+    try {
+      script = scriptProcessor(this.props.script)
+    }
+    catch (e){
+      console.error(e)
+    }
+    return (`<script type="module">${script}</script>`)
   }
 
   buildTemplate = () => {
+    let template = ''
     let templateProcessor = processors.getTemplateProcessor(this.props.templateMode)
-    return (`<body>${templateProcessor(this.props.template)}</body>`)
+    try {
+      template = templateProcessor(this.props.template)
+    }
+    catch (e){
+      console.error(e)
+    }
+    return (`<body>${template}</body>`)
   }
 
   buildContents = () => {
@@ -68,17 +90,6 @@ export class SandboxInterpreter extends React.Component {
     }
     //create new iframe
     let iframe = document.createElement('iframe');
-    // iframe.addEventListener('load', () => {
-    //   alert('here')
-    //   try {
-    //     iframe.contentDocument.open();
-    //     iframe.contentDocument.write(this.buildContents());
-    //     iframe.contentDocument.close();
-    //   }
-    //   catch (e){
-    //     console.error(e.name, e.message)
-    //   }
-    // }, true)
     iframe.height="100%"
     iframe.width="100%"
     iframe.sandbox=this.props.permissions.join(' ')
@@ -87,7 +98,7 @@ export class SandboxInterpreter extends React.Component {
       iframe.srcdoc=this.buildContents()
     }
     catch (e){
-      console.error(e.name, e.message)
+      console.error(e)
     }
     //insert it into dom
     this.iframeContainerRef.appendChild(iframe);
@@ -96,6 +107,7 @@ export class SandboxInterpreter extends React.Component {
   render() {
     return (
       <div
+        className={this.props.className}
         ref={(element) => {this.iframeContainerRef = element}}
         style={{
           height: '100%',
@@ -120,10 +132,32 @@ SandboxInterpreter.defaultProps = {
   ],
   dependencies: [],
   script: '',
-  scriptMode: 'js',
+  scriptMode: 'javascript',
   template: '',
   templateMode: 'html',
   stylesheet: '',
   stylesheetMode: 'css',
   onRef: () => {}
+}
+
+SandboxInterpreter.propTypes = {
+  permissions: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      'allow-forms',
+      'allow-pointer-lock',
+      'allow-popups',
+      'allow-modals',
+      'allow-same-origin',
+      'allow-scripts',
+      'allow-top-navigation'
+    ])
+  ),
+  dependencies: PropTypes.arrayOf(PropTypes.string),
+  script: PropTypes.string,
+  scriptMode: PropTypes.oneOf(['javascript', 'jsx']),
+  template: PropTypes.string,
+  templateMode: PropTypes.oneOf(['html']),
+  stylesheet: PropTypes.string,
+  stylesheetMode: PropTypes.oneOf(['css']),
+  onRef: PropTypes.func
 }

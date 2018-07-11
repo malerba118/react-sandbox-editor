@@ -101,7 +101,7 @@ export default {
     },
     style: {
       type: 'object',
-      acceptedValues: ['{}'],
+      acceptedValues: ['{...}'],
       defaultValue: '{}',
       description: 'Styles applied to root of sandbox.'
     },

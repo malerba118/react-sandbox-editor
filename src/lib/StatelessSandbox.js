@@ -25,18 +25,28 @@ const styles = theme => ({
     minWidth: 320,
     minHeight: 300,
   },
-  center: {
+  _center: {
     display:'flex',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  fill: {
+  _fill: {
     flex: 1
   },
-  tabsContent: {
+  _tabsContent: {
     flex: 1,
     position: 'relative'
   },
+  _interpreter: {
+    position: 'absolute',
+    transition: 'all .45s',
+    zIndex: 0,
+  },
+  _editor: {
+    position: 'absolute',
+    top: 0,
+    transition: 'height .45s',
+  }
 });
 
 
@@ -173,7 +183,7 @@ class StatelessSandbox extends React.Component {
       )
     }
     const iconButtonClasses = classNames(
-      classes.center,
+      classes._center,
       classes[`${theme}IconButton`],
       classes.iconButton
     )
@@ -192,7 +202,7 @@ class StatelessSandbox extends React.Component {
           <Tab
             disableRipple
             classes={tabClasses}
-            label={this.props.scriptEditor.mode}
+            label={this.props.scriptEditor.mode === 'javascript' ? 'js' : this.props.scriptEditor.mode}
           />
           <Tab
             disableRipple
@@ -206,8 +216,8 @@ class StatelessSandbox extends React.Component {
               label="Result"
             />
           )}
-          <div className={classes.fill}></div>
-          <div className={classes.center}>
+          <div className={classes._fill}></div>
+          <div className={classes._center}>
             {this.props.displayMode === 'horizontal-split' && (
                 <IconButton
                 disableRipple
@@ -232,7 +242,7 @@ class StatelessSandbox extends React.Component {
               </IconButton>
             )}
           </div>
-          <div className={classes.center}>
+          <div className={classes._center}>
               <IconButton
                 disableRipple
                 className={iconButtonClasses}
@@ -243,14 +253,12 @@ class StatelessSandbox extends React.Component {
               </IconButton>
           </div>
         </Tabs>
-        <div className={classes.tabsContent} id="tabs-content">
+        <div className={classes._tabsContent} id="tabs-content">
 
           <TemplateEditor
+            className={classes._editor}
             style={{
-              position: 'absolute',
-              top: 0,
               zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
-              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('template', value)}
@@ -259,11 +267,9 @@ class StatelessSandbox extends React.Component {
             theme={this.props.theme}
           />
           <ScriptEditor
+            className={classes._editor}
             style={{
-              position: 'absolute',
-              top: 0,
               zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
-              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('script', value)}
@@ -273,11 +279,9 @@ class StatelessSandbox extends React.Component {
             theme={this.props.theme}
           />
           <StylesheetEditor
+            className={classes._editor}
             style={{
-              position: 'absolute',
-              top: 0,
               zIndex: (selectedTabName === 'stylesheetTab') && !this.state.displayModeTranistionPending ? 1 : 0,
-              transition: 'height .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
@@ -287,12 +291,10 @@ class StatelessSandbox extends React.Component {
           />
           <SandboxInterpreter
             onRef={(ref) => {this.interpreterRef = ref}}
+            className={classes._interpreter}
             style={{
-              position: 'absolute',
-              transition: 'all .45s',
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
               top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
-              zIndex: 0
             }}
             permissions={this.props.permissions}
             dependencies={this.props.dependencies}
@@ -375,7 +377,25 @@ StatelessSandbox.propTypes = {
     mode: PropTypes.oneOf(['css']),
     readOnly: PropTypes.bool
   }),
+  onEditorChange: PropTypes.func,
+  onTabClick: PropTypes.func,
+  onPlayButtonClick: PropTypes.func,
+  onDisplayModeButtonClick: PropTypes.func,
+  theme: PropTypes.oneOf([
+    'solarized_dark',
+    'solarized_light',
+    'twilight',
+    'tomorrow',
+    'github',
+    'monokai',
+  ]),
+  executeOnEditorChangeDebounce: PropTypes.number,
+  executeOnEditorChange: PropTypes.bool,
+  hideDisplayModeButton: PropTypes.bool,
+  selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
+  displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),
   dependencies: PropTypes.arrayOf(PropTypes.string),
+  onRef: () => {},
 }
 
 export {StatelessSandbox}

@@ -89,34 +89,38 @@ function ComponentDocumentation(props) {
           })}
         </TableBody>
       </Table>
-      <Typography style={{margin: 23, marginBottom: 8, color: 'rgba(0,0,0,.6)'}}  variant="subheading" gutterBottom>
-        Methods
-      </Typography>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow style={{height: 52}}>
-            <CustomTableCell>Method</CustomTableCell>
-            <CustomTableCell>Params</CustomTableCell>
-            <CustomTableCell>Return Value</CustomTableCell>
-            <CustomTableCell>Description</CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(component.methods).map((methodName, i) => {
-            const method = component.methods[methodName]
-            return (
-              <TableRow className={classes.row} key={i}>
-                <CustomTableCell component="th" scope="row">
-                  {methodName}
-                </CustomTableCell>
-                <CustomTableCell>{method.params.join(', ')}</CustomTableCell>
-                <CustomTableCell>{method.returnValue}</CustomTableCell>
-                <CustomTableCell>{method.description}</CustomTableCell>
+      {Object.keys(component.methods).length !== 0 && (
+        <div>
+          <Typography style={{margin: 23, marginBottom: 8, color: 'rgba(0,0,0,.6)'}}  variant="subheading" gutterBottom>
+            Methods
+          </Typography>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow style={{height: 52}}>
+                <CustomTableCell>Method</CustomTableCell>
+                <CustomTableCell>Params</CustomTableCell>
+                <CustomTableCell>Return Value</CustomTableCell>
+                <CustomTableCell>Description</CustomTableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+            </TableHead>
+            <TableBody>
+              {Object.keys(component.methods).map((methodName, i) => {
+                const method = component.methods[methodName]
+                return (
+                  <TableRow className={classes.row} key={i}>
+                    <CustomTableCell component="th" scope="row">
+                      {methodName}
+                    </CustomTableCell>
+                    <CustomTableCell>{method.params.join(', ')}</CustomTableCell>
+                    <CustomTableCell>{method.returnValue}</CustomTableCell>
+                    <CustomTableCell>{method.description}</CustomTableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </Paper>
   );
 }
