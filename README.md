@@ -59,9 +59,22 @@ import ReactDOM from 'react-dom'
 import {Sandbox, withDependencies} from 'react-sandbox-editor'
 
 const ReactSandbox = withDependencies([
-  'https://fb.me/react-15.1.0.js',
-  'https://fb.me/react-dom-15.1.0.js'
+  'https://unpkg.com/react@latest/umd/react.development.js',
+  'https://unpkg.com/react-dom@latest/umd/react-dom.development.js'
 ])(Sandbox)
+
+const jsxCode = (
+`const { Chip, Avatar } = window["material-ui"]
+
+ReactDOM.render(
+	<Chip
+		avatar={<Avatar>MB</Avatar>}
+		label="Clickable Chip"
+		onClick={() => alert("Chip Clicked!")}
+	/>,
+	document.getElementById('root')
+);`
+)
 
 class App extends React.Component  {
 
@@ -78,7 +91,7 @@ class App extends React.Component  {
       <ReactSandbox
         theme="solarized_dark"
         scriptEditor={{
-          defaultValue: 'ReactDOM.render(\n  <h1>jQuery version: {jQuery.fn.jquery}</h1>,\n  document.getElementById(\'root\')\n);',
+          defaultValue: jsxCode,
           mode: 'jsx',
           readOnly: false
         }}
@@ -88,7 +101,7 @@ class App extends React.Component  {
           readOnly: false
         }}
         stylesheetEditor={{
-          value: '',
+          defaultValue: 'body { background: pink; }',
           mode: 'css',
           readOnly: false
         }}
@@ -107,7 +120,7 @@ class App extends React.Component  {
           'allow-scripts',
           'allow-top-navigation'
         ]}
-        dependencies={['https://code.jquery.com/jquery-3.3.1.min.js']}
+        dependencies={['https://unpkg.com/@material-ui/core/umd/material-ui.development.js']}
       />
     )
   }
