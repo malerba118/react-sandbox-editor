@@ -5,6 +5,11 @@
 [![NPM](https://img.shields.io/npm/v/react-sandbox-editor.svg)](https://www.npmjs.com/package/react-sandbox-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
+## Demo/Reference
+
+[https://malerba118.github.io/react-sandbox-editor/#/demo](https://malerba118.github.io/react-sandbox-editor/#/demo)<br>
+[https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0](https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0)
+
 ## Install
 
 ```bash
