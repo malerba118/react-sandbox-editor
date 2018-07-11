@@ -7,8 +7,9 @@
 
 ## Demo/Reference
 
-[https://malerba118.github.io/react-sandbox-editor/#/demo](https://malerba118.github.io/react-sandbox-editor/#/demo)<br>
-[https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0](https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0)
+<a href="https://malerba118.github.io/react-sandbox-editor/#/demo" target="_blank">https://malerba118.github.io/react-sandbox-editor/#/demo</a>
+<br>
+<a href="https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0" target="_blank">https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0</a>
 
 ## Install
 
