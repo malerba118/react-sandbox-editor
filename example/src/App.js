@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
+import { HashRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
 import Docs from './components/Docs'
 import Toolbar from './components/Toolbar'
 import Demo from './Demo'
@@ -43,7 +43,7 @@ class App extends Component {
     const {classes} = this.props
     return (
       <MuiThemeProvider theme={theme}>
-        <BrowserRouter basename="/react-sandbox-editor">
+        <HashRouter>
           <div className="App">
             <Toolbar />
             <div id="content">
@@ -54,7 +54,7 @@ class App extends Component {
               </Switch>
             </div>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </MuiThemeProvider>
     )
   }

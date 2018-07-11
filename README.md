@@ -11,20 +11,106 @@
 npm install --save react-sandbox-editor
 ```
 
-## Usage
+## Simple Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Sandbox, withDependencies} from 'react-sandbox-editor'
 
-import MyComponent from 'react-sandbox-editor'
+const ReactSandbox = withDependencies([
+  'https://fb.me/react-15.1.0.js',
+  'https://fb.me/react-dom-15.1.0.js'
+])(Sandbox)
 
-class Example extends Component {
-  render () {
+let App = () => (
+  <ReactSandbox
+    theme="solarized_dark"
+    scriptEditor={{
+      defaultValue: 'ReactDOM.render(\n  <h1>Hello, world!</h1>,\n  document.getElementById(\'root\')\n);',
+      mode: 'jsx',
+      readOnly: false
+    }}
+    templateEditor={{
+      defaultValue: '<div id="root"></div>',
+      mode: 'html',
+      readOnly: false
+    }}
+  />
+)
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
+```
+
+## Complex Usage
+
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Sandbox, withDependencies} from 'react-sandbox-editor'
+
+const ReactSandbox = withDependencies([
+  'https://fb.me/react-15.1.0.js',
+  'https://fb.me/react-dom-15.1.0.js'
+])(Sandbox)
+
+class App extends React.Component  {
+
+  onTabClick = (tabName) => {
+    console.log(tabName)
+  }
+
+  onPlayButtonClick = () => {
+    console.log('Play button clicked!')
+  }
+
+  render() {
     return (
-      <MyComponent />
+      <ReactSandbox
+        theme="solarized_dark"
+        scriptEditor={{
+          defaultValue: 'ReactDOM.render(\n  <h1>jQuery version: {jQuery.fn.jquery}</h1>,\n  document.getElementById(\'root\')\n);',
+          mode: 'jsx',
+          readOnly: false
+        }}
+        templateEditor={{
+          defaultValue: '<div id="root"></div>',
+          mode: 'html',
+          readOnly: false
+        }}
+        stylesheetEditor={{
+          value: '',
+          mode: 'css',
+          readOnly: false
+        }}
+        executeOnEditorChange={true}
+        executeOnEditorChangeDebounce={1000}
+        displayMode="tab"
+        hideDisplayModeButton
+        onTabClick={this.onTabClick}
+        onPlayButtonClick={this.onPlayButtonClick}
+        permissions={[
+          'allow-forms',
+          'allow-pointer-lock',
+          'allow-popups',
+          'allow-modals',
+          'allow-same-origin',
+          'allow-scripts',
+          'allow-top-navigation'
+        ]}
+        dependencies={['https://code.jquery.com/jquery-3.3.1.min.js']}
+      />
     )
   }
 }
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
 ```
 
 ## For local development
