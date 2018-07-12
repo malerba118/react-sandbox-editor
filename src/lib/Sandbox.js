@@ -181,7 +181,7 @@ Sandbox.defaultProps = {
   },
   scriptEditor: {
     defaultValue: '',
-    mode: 'js',
+    mode: 'javascript',
     readOnly: false,
     wrapLines: false,
   },

@@ -49,6 +49,13 @@ const styles = theme => ({
   }
 });
 
+//Tabs was trying to pass props to divs and causing warnings
+//this is to prevent those warnings by discarding those props 
+const DummyTab = (props) => (
+  <div className={props.className} >
+    {props.children}
+  </div>
+)
 
 class StatelessSandbox extends React.Component {
 
@@ -216,8 +223,8 @@ class StatelessSandbox extends React.Component {
               label="Result"
             />
           )}
-          <div className={classes._fill}></div>
-          <div className={classes._center}>
+          <DummyTab className={classes._fill}></DummyTab>
+          <DummyTab className={classes._center}>
             {this.props.displayMode === 'horizontal-split' && (
                 <IconButton
                 disableRipple
@@ -241,8 +248,8 @@ class StatelessSandbox extends React.Component {
                 <SplitScreenDisplayIcon />
               </IconButton>
             )}
-          </div>
-          <div className={classes._center}>
+          </DummyTab>
+          <DummyTab className={classes._center}>
               <IconButton
                 disableRipple
                 className={iconButtonClasses}
@@ -251,7 +258,7 @@ class StatelessSandbox extends React.Component {
               >
                 <PlayCircleOutline />
               </IconButton>
-          </div>
+          </DummyTab>
         </Tabs>
         <div className={classes._tabsContent} id="tabs-content">
 
@@ -343,7 +350,7 @@ StatelessSandbox.defaultProps = {
   },
   scriptEditor: {
     value: '',
-    mode: 'js',
+    mode: 'javascript',
     readOnly: false,
     wrapLines: false,
   },
