@@ -55,7 +55,6 @@ const styles = theme => ({
 function HocDocumentation(props) {
   const { classes } = props;
   const hoc = props.hoc
-  console.log(props)
   return (
     <Paper elevation={0} className={classes.root}>
       <div className={classes.tableTitle}>{hoc.name}</div>
