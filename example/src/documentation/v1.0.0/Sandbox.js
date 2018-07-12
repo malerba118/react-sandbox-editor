@@ -31,7 +31,7 @@ export default {
       defaultValue: 'null',
       description: 'If set, overrides default display mode behavior.'
     },
-    executeOnEditorChange: {
+    executeOnCodeChange: {
       type: 'boolean',
       acceptedValues: [
         'true', 'false'
@@ -39,13 +39,13 @@ export default {
       defaultValue: 'true',
       description: 'Execute code automatically when it changes.'
     },
-    executeOnEditorChangeDebounce: {
+    executeOnCodeChangeDebounce: {
       type: 'int',
       acceptedValues: [
         'positive integer'
       ],
       defaultValue: '1000',
-      description: 'Time to wait in milliseconds before automatically executing code. Only used when executeOnEditorChange is set to true.'
+      description: 'Time to wait in milliseconds before automatically executing code. Only used when executeOnCodeChange is set to true.'
     },
     permissions: {
       type: 'array',
@@ -69,7 +69,7 @@ export default {
       ]`,
       description: 'Permissions granted to the SandboxInterpreter.'
     },
-    onEditorChange: {
+    onCodeChange: {
       type: 'function',
       acceptedValues: [`(editorName:string, editorValue:string) => {...}`],
       defaultValue: `no-op`,

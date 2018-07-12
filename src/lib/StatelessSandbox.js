@@ -83,7 +83,7 @@ class StatelessSandbox extends React.Component {
     // set the initial auto refresh debounce time
     this.requestInterpreterUpdate = debounce(
       this.updateInterpreter,
-      this.props.executeOnEditorChangeDebounce
+      this.props.executeOnCodeChangeDebounce
     )
   }
 
@@ -108,15 +108,15 @@ class StatelessSandbox extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.executeOnEditorChangeDebounce !== prevProps.executeOnEditorChangeDebounce) {
+    if (this.props.executeOnCodeChangeDebounce !== prevProps.executeOnCodeChangeDebounce) {
       // if auto refresh time has changed, change the debounce time
       this.requestInterpreterUpdate = debounce(
         this.updateInterpreter,
-        this.props.executeOnEditorChangeDebounce
+        this.props.executeOnCodeChangeDebounce
       )
     }
     if (
-      (this.props.executeOnEditorChange) &&
+      (this.props.executeOnCodeChange) &&
       (this.props.scriptEditor.value !== prevProps.scriptEditor.value ||
       this.props.templateEditor.value !== prevProps.templateEditor.value ||
       this.props.stylesheetEditor.value !== prevProps.stylesheetEditor.value)
@@ -261,7 +261,7 @@ class StatelessSandbox extends React.Component {
               zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
-            onChange={(value) => this.props.onEditorChange('template', value)}
+            onChange={(value) => this.props.onCodeChange('template', value)}
             value={this.props.templateEditor.value}
             readOnly={this.props.templateEditor.readOnly}
             wrapLines={this.props.templateEditor.wrapLines}
@@ -273,7 +273,7 @@ class StatelessSandbox extends React.Component {
               zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
-            onChange={(value) => this.props.onEditorChange('script', value)}
+            onChange={(value) => this.props.onCodeChange('script', value)}
             value={this.props.scriptEditor.value}
             readOnly={this.props.scriptEditor.readOnly}
             wrapLines={this.props.scriptEditor.wrapLines}
@@ -286,7 +286,7 @@ class StatelessSandbox extends React.Component {
               zIndex: (selectedTabName === 'stylesheetTab') && !this.state.displayModeTranistionPending ? 1 : 0,
               height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
             }}
-            onChange={(value) => this.props.onEditorChange('stylesheet', value)}
+            onChange={(value) => this.props.onCodeChange('stylesheet', value)}
             value={this.props.stylesheetEditor.value}
             readOnly={this.props.stylesheetEditor.readOnly}
             wrapLines={this.props.stylesheetEditor.wrapLines}
@@ -320,8 +320,8 @@ StatelessSandbox = withStyles(styles)(StatelessSandbox)
 StatelessSandbox.defaultProps = {
   theme: 'solarized_dark',
   selectedTab: 'templateTab',
-  executeOnEditorChangeDebounce: 1000,
-  executeOnEditorChange: true,
+  executeOnCodeChangeDebounce: 1000,
+  executeOnCodeChange: true,
   displayMode: 'tab',
   onTabClick: () => {},
   onPlayButtonClick: () => {},
@@ -386,7 +386,7 @@ StatelessSandbox.propTypes = {
     readOnly: PropTypes.bool,
     wrapLines: PropTypes.bool,
   }),
-  onEditorChange: PropTypes.func,
+  onCodeChange: PropTypes.func,
   onTabClick: PropTypes.func,
   onPlayButtonClick: PropTypes.func,
   onDisplayModeButtonClick: PropTypes.func,
@@ -398,8 +398,8 @@ StatelessSandbox.propTypes = {
     'github',
     'monokai',
   ]),
-  executeOnEditorChangeDebounce: PropTypes.number,
-  executeOnEditorChange: PropTypes.bool,
+  executeOnCodeChangeDebounce: PropTypes.number,
+  executeOnCodeChange: PropTypes.bool,
   hideDisplayModeButton: PropTypes.bool,
   selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
   displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),

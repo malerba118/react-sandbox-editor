@@ -3,7 +3,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 function getReactSandboxUsage(component) {
   let componentString = reactElementToJSXString(component, {
     displayName: (component) => 'ReactSandbox',
-    filterProps: ['onEditorChange'],
+    filterProps: ['onCodeChange'],
     tabStop: 2
   })
   return (

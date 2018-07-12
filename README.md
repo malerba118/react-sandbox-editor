@@ -110,8 +110,8 @@ class App extends React.Component  {
           readOnly: false,
           wrapLines: true
         }}
-        executeOnEditorChange={true}
-        executeOnEditorChangeDebounce={1000}
+        executeOnCodeChange={true}
+        executeOnCodeChangeDebounce={1000}
         displayMode="tab"
         hideDisplayModeButton
         onTabClick={this.onTabClick}

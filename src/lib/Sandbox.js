@@ -103,7 +103,7 @@ class Sandbox extends React.Component {
     }
   }
 
-  onEditorChange = (editorName, value) => {
+  onCodeChange = (editorName, value) => {
     this.setState((prevState) => {
       return {
         [editorName]: {
@@ -112,7 +112,7 @@ class Sandbox extends React.Component {
         }
       }
     })
-    this.props.onEditorChange(editorName, value)
+    this.props.onCodeChange(editorName, value)
   }
 
   render() {
@@ -126,9 +126,9 @@ class Sandbox extends React.Component {
           onRef={(ref) => {this.statelessSandboxRef = ref}}
           classes={this.props.classes}
           style={this.props.style}
-          onEditorChange={this.onEditorChange}
-          executeOnEditorChange={this.props.executeOnEditorChange}
-          executeOnEditorChangeDebounce={this.props.executeOnEditorChangeDebounce}
+          onCodeChange={this.onCodeChange}
+          executeOnCodeChange={this.props.executeOnCodeChange}
+          executeOnCodeChangeDebounce={this.props.executeOnCodeChangeDebounce}
           onTabClick={this.onTabClick}
           selectedTab={selectedTab}
           onPlayButtonClick={this.onPlayButtonClick}
@@ -157,13 +157,13 @@ class Sandbox extends React.Component {
 }
 
 Sandbox.defaultProps = {
-  onEditorChange: () => {},
+  onCodeChange: () => {},
   onTabClick: () => {},
   onPlayButtonClick: () => {},
   onDisplayModeButtonClick: () => {},
   theme: 'solarized_dark',
-  executeOnEditorChangeDebounce: 1000,
-  executeOnEditorChange: true,
+  executeOnCodeChangeDebounce: 1000,
+  executeOnCodeChange: true,
   permissions: [
     'allow-forms',
     'allow-pointer-lock',
@@ -224,7 +224,7 @@ Sandbox.propTypes = {
     readOnly: PropTypes.bool,
     wrapLines: PropTypes.bool,
   }),
-  onEditorChange: PropTypes.func,
+  onCodeChange: PropTypes.func,
   onTabClick: PropTypes.func,
   onPlayButtonClick: PropTypes.func,
   onDisplayModeButtonClick: PropTypes.func,
@@ -236,8 +236,8 @@ Sandbox.propTypes = {
     'github',
     'monokai',
   ]),
-  executeOnEditorChangeDebounce: PropTypes.number,
-  executeOnEditorChange: PropTypes.bool,
+  executeOnCodeChangeDebounce: PropTypes.number,
+  executeOnCodeChange: PropTypes.bool,
   hideDisplayModeButton: PropTypes.bool,
   selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
   displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),

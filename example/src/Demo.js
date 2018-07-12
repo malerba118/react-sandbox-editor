@@ -105,11 +105,11 @@ class Demo extends Component {
     headerClass: 'none',
     showDisplayButton: true,
     permissions: possiblePermissions,
-    executeOnEditorChange: true,
-    executeOnEditorChangeDebounce: 1000,
+    executeOnCodeChange: true,
+    executeOnCodeChangeDebounce: 1000,
   }
 
-  onEditorChange = (editorName, value) => {
+  onCodeChange = (editorName, value) => {
 
   }
 
@@ -129,11 +129,11 @@ class Demo extends Component {
     const {classes} = this.props
     let reactSandbox = (
       <ReactSandbox
-        onEditorChange={this.onEditorChange}
+        onCodeChange={this.onCodeChange}
         theme={this.state.theme}
         permissions={this.state.permissions}
-        executeOnEditorChange={this.state.executeOnEditorChange}
-        executeOnEditorChangeDebounce={this.state.executeOnEditorChangeDebounce}
+        executeOnCodeChange={this.state.executeOnCodeChange}
+        executeOnCodeChangeDebounce={this.state.executeOnCodeChangeDebounce}
         hideDisplayModeButton={!this.state.showDisplayButton}
         templateEditor={{
           defaultValue: `<div id="root"></div>`,
@@ -218,9 +218,9 @@ class Demo extends Component {
                     <FormControlLabel
                       control={
                         <Switch
-                          checked={this.state.executeOnEditorChange}
-                          onChange={(e) => this.onSwitchChange('executeOnEditorChange', e.target.checked)}
-                          value="executeOnEditorChange"
+                          checked={this.state.executeOnCodeChange}
+                          onChange={(e) => this.onSwitchChange('executeOnCodeChange', e.target.checked)}
+                          value="executeOnCodeChange"
                         />
                       }
                       label="Auto Update"
@@ -232,9 +232,9 @@ class Demo extends Component {
                     Update Debounce
                   </InputLabel>
                   <Select
-                    disabled={!this.state.executeOnEditorChange}
-                    onChange={(e) => this.onSelectChange('executeOnEditorChangeDebounce', e.target.value)}
-                    value={this.state.executeOnEditorChangeDebounce}
+                    disabled={!this.state.executeOnCodeChange}
+                    onChange={(e) => this.onSelectChange('executeOnCodeChangeDebounce', e.target.value)}
+                    value={this.state.executeOnCodeChangeDebounce}
                     inputProps={{
                       name: 'Debounce',
                       id: 'debounce-select',
