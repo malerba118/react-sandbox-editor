@@ -35,12 +35,14 @@ let App = () => (
     scriptEditor={{
       defaultValue: 'ReactDOM.render(\n  <h1>Hello, world!</h1>,\n  document.getElementById(\'root\')\n);',
       mode: 'jsx',
-      readOnly: false
+      readOnly: false,
+      wrapLines: false
     }}
     templateEditor={{
       defaultValue: '<div id="root"></div>',
       mode: 'html',
-      readOnly: false
+      readOnly: false,
+      wrapLines: false
     }}
   />
 )
@@ -93,17 +95,20 @@ class App extends React.Component  {
         scriptEditor={{
           defaultValue: jsxCode,
           mode: 'jsx',
-          readOnly: false
+          readOnly: false,
+          wrapLines: true
         }}
         templateEditor={{
           defaultValue: '<div id="root"></div>',
           mode: 'html',
-          readOnly: false
+          readOnly: false,
+          wrapLines: true
         }}
         stylesheetEditor={{
           defaultValue: 'body { background: pink; }',
           mode: 'css',
-          readOnly: false
+          readOnly: false,
+          wrapLines: true
         }}
         executeOnEditorChange={true}
         executeOnEditorChangeDebounce={1000}
