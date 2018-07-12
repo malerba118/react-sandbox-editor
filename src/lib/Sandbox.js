@@ -176,17 +176,20 @@ Sandbox.defaultProps = {
   templateEditor: {
     defaultValue: '',
     mode: 'html',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   scriptEditor: {
     defaultValue: '',
     mode: 'js',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   stylesheetEditor: {
     defaultValue: '',
     mode: 'css',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   dependencies: []
 }
@@ -206,17 +209,20 @@ Sandbox.propTypes = {
   templateEditor: PropTypes.shape({
     defaultValue: PropTypes.string,
     mode: PropTypes.oneOf(['html']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   scriptEditor: PropTypes.shape({
     defaultValue: PropTypes.string,
     mode: PropTypes.oneOf(['javascript', 'jsx']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   stylesheetEditor: PropTypes.shape({
     defaultValue: PropTypes.string,
     mode: PropTypes.oneOf(['css']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   onEditorChange: PropTypes.func,
   onTabClick: PropTypes.func,

@@ -138,7 +138,8 @@ class Demo extends Component {
         templateEditor={{
           defaultValue: `<div id="root"></div>`,
           mode: 'html',
-          readOnly: false
+          readOnly: false,
+          wrapLines: false
         }}
         scriptEditor={{
           defaultValue: `ReactDOM.render(
@@ -146,7 +147,8 @@ class Demo extends Component {
   document.getElementById('root')
 );`,
           mode: 'jsx',
-          readOnly: false
+          readOnly: false,
+          wrapLines: false
         }}
         classes={{header: classes[this.state.headerClass]}}
       />
@@ -210,13 +212,6 @@ class Demo extends Component {
                   </FormGroup>
                 </FormControl>
               </div>
-              {// hideDisplayModeButton
-              // executeOnEditorChange
-              // executeOnEditorChangeDebounce
-              // classes
-              // theme
-              // permissions
-              }
               <div id="row-2" className={classes.horizontalForm}>
                 <FormControl component="fieldset" className={classes.formControl}>
                   <FormGroup>
@@ -270,52 +265,6 @@ class Demo extends Component {
                 </FormControl>
               </div>
             </div>
-            {
-            // <div id="editor-settings" style={{ display: 'flex', justifyContent: 'start', margin: '20 0'}}>
-            //   <FormControl className={classes.formControl} component="fieldset">
-            //     <FormLabel component="legend">Template Editor</FormLabel>
-            //     <FormGroup>
-            //       <FormControlLabel
-            //         control={
-            //           <Switch
-            //             checked={true}
-            //             value="gilad"
-            //           />
-            //         }
-            //         label="Gilad Gray"
-            //       />
-            //     </FormGroup>
-            //   </FormControl>
-            //     <FormControl className={classes.formControl} component="fieldset">
-            //       <FormLabel component="legend">Script Editor</FormLabel>
-            //       <FormGroup>
-            //         <FormControlLabel
-            //           control={
-            //             <Switch
-            //               checked={true}
-            //               value="gilad"
-            //             />
-            //           }
-            //           label="Gilad Gray"
-            //         />
-            //       </FormGroup>
-            //     </FormControl>
-            //     <FormControl className={classes.formControl} component="fieldset">
-            //       <FormLabel component="legend">Stylesheet Editor</FormLabel>
-            //       <FormGroup>
-            //         <FormControlLabel
-            //           control={
-            //             <Switch
-            //               checked={true}
-            //               value="gilad"
-            //             />
-            //           }
-            //           label="Gilad Gray"
-            //         />
-            //       </FormGroup>
-            //     </FormControl>
-            // </div>
-            }
             <div id="sandbox-usage" className={classes.sandboxUsage}>
               <AceEditor
                 height="350px"

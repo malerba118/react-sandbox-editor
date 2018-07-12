@@ -44,8 +44,9 @@ class TemplateEditor extends React.Component {
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
                 mode="html"
-                focus={true}
+                focus={false}
                 readOnly={this.props.readOnly}
+                wrapEnabled={this.props.wrapLines}
                 theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}
@@ -65,6 +66,7 @@ TemplateEditor = withStyles(styles)(TemplateEditor)
 TemplateEditor.defaultProps = {
   mode: 'html',
   readOnly: false,
+  wrapLines: false,
   theme: 'solarized_dark',
   value: '',
   onChange: () => {}
@@ -73,6 +75,7 @@ TemplateEditor.defaultProps = {
 TemplateEditor.propTypes = {
   mode: PropTypes.oneOf(['html']),
   readOnly: PropTypes.bool,
+  wrapLines: PropTypes.bool,
   theme: PropTypes.oneOf([
     'solarized_dark',
     'solarized_light',

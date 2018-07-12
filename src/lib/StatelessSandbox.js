@@ -264,6 +264,7 @@ class StatelessSandbox extends React.Component {
             onChange={(value) => this.props.onEditorChange('template', value)}
             value={this.props.templateEditor.value}
             readOnly={this.props.templateEditor.readOnly}
+            wrapLines={this.props.templateEditor.wrapLines}
             theme={this.props.theme}
           />
           <ScriptEditor
@@ -275,6 +276,7 @@ class StatelessSandbox extends React.Component {
             onChange={(value) => this.props.onEditorChange('script', value)}
             value={this.props.scriptEditor.value}
             readOnly={this.props.scriptEditor.readOnly}
+            wrapLines={this.props.scriptEditor.wrapLines}
             mode={this.props.scriptEditor.mode}
             theme={this.props.theme}
           />
@@ -287,6 +289,7 @@ class StatelessSandbox extends React.Component {
             onChange={(value) => this.props.onEditorChange('stylesheet', value)}
             value={this.props.stylesheetEditor.value}
             readOnly={this.props.stylesheetEditor.readOnly}
+            wrapLines={this.props.stylesheetEditor.wrapLines}
             theme={this.props.theme}
           />
           <SandboxInterpreter
@@ -335,17 +338,20 @@ StatelessSandbox.defaultProps = {
   templateEditor: {
     value: '',
     mode: 'html',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   scriptEditor: {
     value: '',
     mode: 'js',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   stylesheetEditor: {
     value: '',
     mode: 'css',
-    readOnly: false
+    readOnly: false,
+    wrapLines: false,
   },
   dependencies: []
 };
@@ -365,17 +371,20 @@ StatelessSandbox.propTypes = {
   templateEditor: PropTypes.shape({
     value: PropTypes.string,
     mode: PropTypes.oneOf(['html']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   scriptEditor: PropTypes.shape({
     value: PropTypes.string,
     mode: PropTypes.oneOf(['javascript', 'jsx']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   stylesheetEditor: PropTypes.shape({
     value: PropTypes.string,
     mode: PropTypes.oneOf(['css']),
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    wrapLines: PropTypes.bool,
   }),
   onEditorChange: PropTypes.func,
   onTabClick: PropTypes.func,

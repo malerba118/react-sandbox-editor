@@ -43,8 +43,9 @@ class StylesheetEditor extends React.Component {
                 height={`${height !== undefined ? height  : '100%'}`}
                 width={`${width !== undefined ? width  : '100%'}`}
                 mode="css"
-                focus={true}
+                focus={false}
                 readOnly={this.props.readOnly}
+                wrapEnabled={this.props.wrapLines}
                 theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}
@@ -64,6 +65,7 @@ StylesheetEditor = withStyles(styles)(StylesheetEditor)
 StylesheetEditor.defaultProps = {
   mode: 'css',
   readOnly: false,
+  wrapLines: false,
   theme: 'solarized_dark',
   value: '',
   onChange: () => {}
@@ -72,6 +74,7 @@ StylesheetEditor.defaultProps = {
 StylesheetEditor.propTypes = {
   mode: PropTypes.oneOf(['css']),
   readOnly: PropTypes.bool,
+  wrapLines: PropTypes.bool,
   theme: PropTypes.oneOf([
     'solarized_dark',
     'solarized_light',

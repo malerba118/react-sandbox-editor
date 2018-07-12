@@ -127,13 +127,15 @@ export default {
         `{
           defaultValue: string,
           mode: oneOf(['html']),
-          readOnly: boolean
+          readOnly: boolean,
+          wrapLines: boolean
         }`
       ],
       defaultValue: `{
         defaultValue: '',
         mode: 'html',
-        readOnly: false
+        readOnly: false,
+        wrapLines: false
       }`,
       description: 'Template editor options.'
     },
@@ -143,15 +145,17 @@ export default {
         `{
           defaultValue: string,
           mode: oneOf(['javascript', 'jsx']),
-          readOnly: boolean
+          readOnly: boolean,
+          wrapLines: boolean
         }`
       ],
       defaultValue: `{
         defaultValue: '',
         mode: 'javascript',
-        readOnly: false
+        readOnly: false,
+        wrapLines: false
       }`,
-      description: 'Template editor options.'
+      description: 'Script editor options.'
     },
     stylesheetEditor: {
       type: 'object',
@@ -159,15 +163,17 @@ export default {
         `{
           defaultValue: string,
           mode: oneOf(['css']),
-          readOnly: boolean
+          readOnly: boolean,
+          wrapLines: boolean
         }`
       ],
       defaultValue: `{
         defaultValue: '',
         mode: 'css',
-        readOnly: false
+        readOnly: false,
+        wrapLines: false
       }`,
-      description: 'Template editor options.'
+      description: 'Stylesheet editor options.'
     },
   },
   methods: {

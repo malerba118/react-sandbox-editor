@@ -46,8 +46,9 @@ class ScriptEditor extends React.Component {
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
                 mode={this.props.mode}
-                focus={true}
+                focus={false}
                 readOnly={this.props.readOnly}
+                wrapEnabled={this.props.wrapLines}
                 theme={this.props.theme}
                 name={this.state.name}
                 value={this.props.value}
@@ -67,6 +68,7 @@ ScriptEditor = withStyles(styles)(ScriptEditor)
 ScriptEditor.defaultProps = {
   mode: 'javascript',
   readOnly: false,
+  wrapLines: false,
   theme: 'solarized_dark',
   value: '',
   onChange: () => {}
@@ -75,6 +77,7 @@ ScriptEditor.defaultProps = {
 ScriptEditor.propTypes = {
   mode: PropTypes.oneOf(['javascript', 'jsx']),
   readOnly: PropTypes.bool,
+  wrapLines: PropTypes.bool,
   theme: PropTypes.oneOf([
     'solarized_dark',
     'solarized_light',

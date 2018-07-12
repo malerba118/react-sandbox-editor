@@ -35,7 +35,7 @@ export default {
     value: {
       type: 'string',
       acceptedValues: ['any string'],
-      defaultValue: '{}',
+      defaultValue: "''",
       description: 'Value displayed in the editor.'
     },
     mode: {
@@ -49,6 +49,12 @@ export default {
       acceptedValues: ['true', 'false'],
       defaultValue: 'false',
       description: 'Disables typing in the editor.'
+    },
+    wrapLines: {
+      type: 'boolean',
+      acceptedValues: ['true', 'false'],
+      defaultValue: 'false',
+      description: 'Forces lines to wrap if they overflow the editor width.'
     }
   },
   methods: {

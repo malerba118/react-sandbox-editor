@@ -3,7 +3,8 @@ import StatelessSandbox from './StatelessSandbox'
 import TemplateEditor from './TemplateEditor'
 import ScriptEditor from './ScriptEditor'
 import StylesheetEditor from './StylesheetEditor'
-
+import SandboxInterpreter from './SandboxInterpreter'
+import withDependencies from './withDependencies'
 
 
 export default {
@@ -12,9 +13,10 @@ export default {
     StatelessSandbox,
     TemplateEditor,
     ScriptEditor,
-    StylesheetEditor
+    StylesheetEditor,
+    SandboxInterpreter
   },
-  "utilities": {
-    withDependencies: ""
+  "hoc": {
+    withDependencies
   }
 }
