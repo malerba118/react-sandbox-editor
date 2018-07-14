@@ -1,12 +1,14 @@
 {
   "name": "react-sandbox-editor",
-  "version": "1.0.0",
-  "description": "React components including a sandbox interpreter and editor",
+  "version": "1.0.1",
+  "description": "React component library for sandboxed execution of html/js/css",
   "author": "malerba118",
   "license": "MIT",
   "repository": "malerba118/react-sandbox-editor",
+  "keywords": ["react","sandbox","sandboxed","playground","ace","editor","component","jsfiddle","codepen","codesandbox"],
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "unpkg": "dist/index.umd.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",

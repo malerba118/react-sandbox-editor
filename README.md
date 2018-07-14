@@ -4,6 +4,13 @@
 
 [![NPM](https://img.shields.io/npm/v/react-sandbox-editor.svg)](https://www.npmjs.com/package/react-sandbox-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Overview
+
+There are many hosted web playground solutions these days (CodeSandbox, JSFiddle, CodePen).
+CodeSandbox in particular has blown me away, props to Ives van Hoorne for putting it together.
+However, I've yet to find a good unhosted playground solution. The intent of this library is
+to provide a highly-customizable unhosted web playground solution so that in your React apps you
+can include web snippets as flexible React components and not as rigid iframes with embedded content.
 
 ## Demo/Reference
 
