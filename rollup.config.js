@@ -8,6 +8,12 @@ import replace from 'rollup-plugin-replace';
 import pkg from './package.json'
 
 export default {
+  external: ['react', 'react-dom', 'prop-types'],
+  globals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'prop-types': 'PropTypes'
+  },
   input: 'src/index.js',
   output: [
     {

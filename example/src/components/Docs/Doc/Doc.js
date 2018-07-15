@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter, Route, Switch, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import ComponentDocumentation from './ComponentDocumentation'
 import HocDocumentation from './HocDocumentation'
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,7 @@ class Doc extends Component {
     const doc = this.props.doc
     if (!doc) {
       return (
-        <div>
+        <div style={{textAlign: 'center', marginTop: 64}}>
           Documentation version does not exist
         </div>
       )

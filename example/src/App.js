@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { HashRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Docs from './components/Docs'
 import Toolbar from './components/Toolbar'
 import Demo from './Demo'
-
-const toolbarHeight = 64
 
 const theme = createMuiTheme({
   typography: {
@@ -40,7 +37,6 @@ const styles = (theme) => ({
 class App extends Component {
 
   render () {
-    const {classes} = this.props
     return (
       <MuiThemeProvider theme={theme}>
         <HashRouter>
@@ -48,7 +44,8 @@ class App extends Component {
             <Toolbar />
             <div id="content">
               <Switch>
-                <Route path='/docs/:docId' component={Docs} />
+                <Route path='/docs/:version' component={Docs} />
+                <Route path='/docs' render={() => <Redirect to="/docs/latest"/>} />
                 <Route path='/demo' component={Demo} />
                 <Route path='/' render={() => <Redirect to="/demo"/>} />
               </Switch>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import withStyles from '@material-ui/core/styles/withStyles';
-import { withRouter, Route, Switch, Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import classNames from 'classnames'
 
 const toolbarHeight = 64
@@ -38,7 +37,7 @@ class Toolbar extends Component {
         <Link className={classNames(
           classes.toolbarLink,
           (active === 'docs' && classes.active)
-        )} to="/docs/v1.0.0">Documentation</Link>
+        )} to="/docs/latest">Documentation</Link>
       </div>
     )
   }

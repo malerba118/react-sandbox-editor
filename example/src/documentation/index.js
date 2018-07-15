@@ -1,5 +1,5 @@
-import v100 from './v1.0.0'
+import v10X from './v1.0.X'
 
 export default {
-  "v1.0.0": v100
+  "v1.0.X": v10X,
 }
