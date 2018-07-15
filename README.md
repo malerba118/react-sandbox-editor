@@ -16,7 +16,15 @@ can include web snippets as flexible React components and not as rigid iframes w
 
 <a href="https://malerba118.github.io/react-sandbox-editor/#/demo" target="_blank">https://malerba118.github.io/react-sandbox-editor/#/demo</a>
 <br>
-<a href="https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0" target="_blank">https://malerba118.github.io/react-sandbox-editor/#/docs/v1.0.0</a>
+<a href="https://malerba118.github.io/react-sandbox-editor/#/docs/latest" target="_blank">https://malerba118.github.io/react-sandbox-editor/#/docs/latest</a>
+
+### Other Examples
+<a href="https://codesandbox.io/s/pw10prrqkx" target="_blank">Material UI Sandbox</a>
+<br>
+<a href="https://codesandbox.io/s/9znopznwko" target="_blank">Read Only Sandbox With No Header</a>
+<br>
+<a href="https://codesandbox.io/s/508957y704" target="_blank">Sandbox Inside Sandbox</a>
+<br>
 
 ## Install
 
