@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import {StatelessSandbox} from './StatelessSandbox';
+import { StatelessSandbox } from '../StatelessSandbox';
 import JssProvider from 'react-jss/lib/JssProvider';
 import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
 
@@ -244,4 +244,4 @@ Sandbox.propTypes = {
   dependencies: PropTypes.arrayOf(PropTypes.string),
 }
 
-export {Sandbox}
+export { Sandbox }

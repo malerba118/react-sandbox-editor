@@ -7,9 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ReactResizeDetector from 'react-resize-detector';
 import classNames from 'classnames';
 
-import 'brace/mode/javascript';
-import 'brace/mode/jsx';
-import 'brace/mode/typescript';
+import 'brace/mode/html';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
 import 'brace/theme/solarized_light';
@@ -22,7 +20,7 @@ const styles = theme => ({
   root: {height: '100%', width: '100%'}
 });
 
-class ScriptEditor extends React.Component {
+class TemplateEditor extends React.Component {
 
   //unique number for each instance (for dom id)
   static id = 0
@@ -31,7 +29,7 @@ class ScriptEditor extends React.Component {
     super(props)
 
     this.state = {
-      name: "script-editor-" + ScriptEditor.id++
+      name: "template-editor-" + TemplateEditor.id++,
     }
   }
 
@@ -45,7 +43,7 @@ class ScriptEditor extends React.Component {
               <AceEditor
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
-                mode={this.props.mode}
+                mode="html"
                 focus={false}
                 readOnly={this.props.readOnly}
                 wrapEnabled={this.props.wrapLines}
@@ -63,10 +61,10 @@ class ScriptEditor extends React.Component {
   }
 }
 
-ScriptEditor = withStyles(styles)(ScriptEditor)
+TemplateEditor = withStyles(styles)(TemplateEditor)
 
-ScriptEditor.defaultProps = {
-  mode: 'javascript',
+TemplateEditor.defaultProps = {
+  mode: 'html',
   readOnly: false,
   wrapLines: false,
   theme: 'solarized_dark',
@@ -74,8 +72,8 @@ ScriptEditor.defaultProps = {
   onChange: () => {}
 }
 
-ScriptEditor.propTypes = {
-  mode: PropTypes.oneOf(['javascript', 'jsx']),
+TemplateEditor.propTypes = {
+  mode: PropTypes.oneOf(['html']),
   readOnly: PropTypes.bool,
   wrapLines: PropTypes.bool,
   theme: PropTypes.oneOf([
@@ -90,4 +88,4 @@ ScriptEditor.propTypes = {
   onChange: PropTypes.func
 }
 
-export {ScriptEditor}
+export { TemplateEditor }

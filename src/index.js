@@ -1,8 +1,8 @@
-import { SandboxInterpreter } from './lib/SandboxInterpreter'
-import { StatelessSandbox } from './lib/StatelessSandbox'
-import { Sandbox } from './lib/Sandbox'
-import { withDependencies } from './lib/utils'
-import { ScriptEditor, StylesheetEditor, TemplateEditor } from './lib/editors'
+import { SandboxInterpreter } from './components/SandboxInterpreter'
+import { StatelessSandbox } from './components/StatelessSandbox'
+import { Sandbox } from './components/Sandbox'
+import { withDependencies } from './utils'
+import { ScriptEditor, StylesheetEditor, TemplateEditor } from './components/Editors'
 
 import styles from './styles.css'
 

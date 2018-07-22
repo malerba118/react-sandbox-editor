@@ -7,7 +7,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ReactResizeDetector from 'react-resize-detector';
 import classNames from 'classnames';
 
-import 'brace/mode/html';
+import 'brace/mode/javascript';
+import 'brace/mode/jsx';
+import 'brace/mode/typescript';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
 import 'brace/theme/solarized_light';
@@ -20,7 +22,7 @@ const styles = theme => ({
   root: {height: '100%', width: '100%'}
 });
 
-class TemplateEditor extends React.Component {
+class ScriptEditor extends React.Component {
 
   //unique number for each instance (for dom id)
   static id = 0
@@ -29,7 +31,7 @@ class TemplateEditor extends React.Component {
     super(props)
 
     this.state = {
-      name: "template-editor-" + TemplateEditor.id++,
+      name: "script-editor-" + ScriptEditor.id++
     }
   }
 
@@ -43,7 +45,7 @@ class TemplateEditor extends React.Component {
               <AceEditor
                 height={`${height !== undefined ? height : '100%'}`}
                 width={`${width !== undefined ? width : '100%'}`}
-                mode="html"
+                mode={this.props.mode}
                 focus={false}
                 readOnly={this.props.readOnly}
                 wrapEnabled={this.props.wrapLines}
@@ -61,10 +63,10 @@ class TemplateEditor extends React.Component {
   }
 }
 
-TemplateEditor = withStyles(styles)(TemplateEditor)
+ScriptEditor = withStyles(styles)(ScriptEditor)
 
-TemplateEditor.defaultProps = {
-  mode: 'html',
+ScriptEditor.defaultProps = {
+  mode: 'javascript',
   readOnly: false,
   wrapLines: false,
   theme: 'solarized_dark',
@@ -72,8 +74,8 @@ TemplateEditor.defaultProps = {
   onChange: () => {}
 }
 
-TemplateEditor.propTypes = {
-  mode: PropTypes.oneOf(['html']),
+ScriptEditor.propTypes = {
+  mode: PropTypes.oneOf(['javascript', 'jsx']),
   readOnly: PropTypes.bool,
   wrapLines: PropTypes.bool,
   theme: PropTypes.oneOf([
@@ -88,4 +90,4 @@ TemplateEditor.propTypes = {
   onChange: PropTypes.func
 }
 
-export {TemplateEditor}
+export { ScriptEditor }

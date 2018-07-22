@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
-import processors from './processors'
+import { processors } from '../../utils'
 
 export class SandboxInterpreter extends React.Component {
 

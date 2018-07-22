@@ -21,5 +21,5 @@ function withDependencies(dependencies) {
 }
 
 export {
-  withDependencies
+  withDependencies,
 }

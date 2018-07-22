@@ -10,8 +10,8 @@ import TabDisplayIcon from '@material-ui/icons/Tab';
 import SplitScreenDisplayIcon from '@material-ui/icons/ViewStream';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
-import {SandboxInterpreter} from './SandboxInterpreter'
+import { ScriptEditor, TemplateEditor, StylesheetEditor } from '../Editors'
+import { SandboxInterpreter } from '../SandboxInterpreter'
 import debounce from 'debounce'
 import themeStyles from './StatelessSandboxThemes'
 
@@ -50,7 +50,7 @@ const styles = theme => ({
 });
 
 //Tabs was trying to pass props to divs and causing warnings
-//this is to prevent those warnings by discarding those props 
+//this is to prevent those warnings by discarding those props
 const DummyTab = (props) => (
   <div className={props.className} >
     {props.children}
@@ -414,4 +414,4 @@ StatelessSandbox.propTypes = {
   onRef: () => {},
 }
 
-export {StatelessSandbox}
+export { StatelessSandbox }

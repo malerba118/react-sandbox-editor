@@ -87,4 +87,4 @@ StylesheetEditor.propTypes = {
   onChange: PropTypes.func
 }
 
-export {StylesheetEditor}
+export { StylesheetEditor }
