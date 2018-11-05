@@ -1,6 +1,6 @@
 {
   "name": "react-sandbox-editor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React component library for sandboxed execution of html/js/css",
   "author": "malerba118",
   "license": "MIT",
