@@ -35,14 +35,14 @@ npm install --save react-sandbox-editor
 ## Simple Usage
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Sandbox, withDependencies} from 'react-sandbox-editor'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Sandbox, withDependencies } from "react-sandbox-editor";
 
 const ReactSandbox = withDependencies([
-  'https://fb.me/react-15.1.0.js',
-  'https://fb.me/react-dom-15.1.0.js'
-])(Sandbox)
+  "https://unpkg.com/react@16.6.0/umd/react.development.js",
+  "https://unpkg.com/react-dom@16.6.0/umd/react-dom.development.js"
+])(Sandbox);
 
 let App = () => (
   <ReactSandbox
@@ -60,28 +60,27 @@ let App = () => (
       wrapLines: false
     }}
   />
-)
+);
 
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-)
+);
 ```
 
 ## Complex Usage
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Sandbox, withDependencies} from 'react-sandbox-editor'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Sandbox, withDependencies } from "react-sandbox-editor";
 
 const ReactSandbox = withDependencies([
-  'https://unpkg.com/react@latest/umd/react.development.js',
-  'https://unpkg.com/react-dom@latest/umd/react-dom.development.js'
-])(Sandbox)
+  "https://unpkg.com/react@16.6.0/umd/react.development.js",
+  "https://unpkg.com/react-dom@16.6.0/umd/react-dom.development.js"
+])(Sandbox);
 
-const jsxCode = (
-`const { Chip, Avatar } = window["material-ui"]
+const jsxCode = `const { Chip, Avatar } = window["material-ui"]
 
 ReactDOM.render(
 	<Chip
@@ -90,18 +89,20 @@ ReactDOM.render(
 		onClick={() => alert("Chip Clicked!")}
 	/>,
 	document.getElementById('root')
-);`
-)
+);`;
 
-class App extends React.Component  {
-
-  onTabClick = (tabName) => {
-    console.log(tabName)
-  }
+class App extends React.Component {
+  onTabClick = tabName => {
+    console.log(tabName);
+  };
 
   onPlayButtonClick = () => {
-    console.log('Play button clicked!')
-  }
+    console.log("Play button clicked!");
+  };
+
+  onCodeChange = (editorName, value) => {
+    console.log(`Code in ${editorName} editor has changed: ${value}`);
+  };
 
   render() {
     return (
@@ -109,47 +110,45 @@ class App extends React.Component  {
         theme="solarized_dark"
         scriptEditor={{
           defaultValue: jsxCode,
-          mode: 'jsx',
+          mode: "jsx",
           readOnly: false,
           wrapLines: true
         }}
         templateEditor={{
           defaultValue: '<div id="root"></div>',
-          mode: 'html',
+          mode: "html",
           readOnly: false,
           wrapLines: true
         }}
         stylesheetEditor={{
-          defaultValue: 'body { background: pink; }',
-          mode: 'css',
+          defaultValue: "body { background: pink; }",
+          mode: "css",
           readOnly: false,
           wrapLines: true
         }}
         executeOnCodeChange={true}
         executeOnCodeChangeDebounce={1000}
-        displayMode="tab"
-        hideDisplayModeButton
         onTabClick={this.onTabClick}
         onPlayButtonClick={this.onPlayButtonClick}
+        onCodeChange={this.onCodeChange}
         permissions={[
-          'allow-forms',
-          'allow-pointer-lock',
-          'allow-popups',
-          'allow-modals',
-          'allow-same-origin',
-          'allow-scripts',
-          'allow-top-navigation'
+          "allow-forms",
+          "allow-pointer-lock",
+          "allow-popups",
+          "allow-modals",
+          "allow-same-origin",
+          "allow-scripts",
+          "allow-top-navigation"
         ]}
-        dependencies={['https://unpkg.com/@material-ui/core/umd/material-ui.development.js']}
+        dependencies={[
+          "https://unpkg.com/@material-ui/core@3.0.0/umd/material-ui.development.js"
+        ]}
       />
-    )
+    );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 ## For local development
