@@ -5,15 +5,15 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
-import TabDisplayIcon from '@material-ui/icons/Tab';
-import SplitScreenDisplayIcon from '@material-ui/icons/ViewStream';
+import PlayCircleOutline from '../media/PlayButtonIcon';
+import TabDisplayIcon from '../media/TabsViewIcon';
+import SplitScreenDisplayIcon from '../media/SplitViewIcon';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors'
-import {SandboxInterpreter} from './SandboxInterpreter'
-import debounce from 'debounce'
-import themeStyles from './StatelessSandboxThemes'
+import {ScriptEditor, TemplateEditor, StylesheetEditor} from './editors';
+import {SandboxInterpreter} from './SandboxInterpreter';
+import debounce from 'debounce';
+import themeStyles from './StatelessSandboxThemes';
 
 const styles = theme => ({
   ...themeStyles,
@@ -50,7 +50,7 @@ const styles = theme => ({
 });
 
 //Tabs was trying to pass props to divs and causing warnings
-//this is to prevent those warnings by discarding those props 
+//this is to prevent those warnings by discarding those props
 const DummyTab = (props) => (
   <div className={props.className} >
     {props.children}
@@ -124,7 +124,9 @@ class StatelessSandbox extends React.Component {
     }
     if (
       (this.props.executeOnCodeChange) &&
-      (this.props.scriptEditor.value !== prevProps.scriptEditor.value ||
+      (this.props.preScript !== prevProps.preScript ||
+      this.props.postScript !== prevProps.postScript ||
+      this.props.scriptEditor.value !== prevProps.scriptEditor.value ||
       this.props.templateEditor.value !== prevProps.templateEditor.value ||
       this.props.stylesheetEditor.value !== prevProps.stylesheetEditor.value)
     ) {
@@ -308,7 +310,9 @@ class StatelessSandbox extends React.Component {
             }}
             permissions={this.props.permissions}
             dependencies={this.props.dependencies}
+            preScript={this.props.preScript}
             script={this.state.interpreter.script}
+            postScript={this.props.postScript}
             scriptMode={this.props.scriptEditor.mode}
             template={this.state.interpreter.template}
             templateMode={this.props.templateEditor.mode}
@@ -342,6 +346,8 @@ StatelessSandbox.defaultProps = {
     'allow-scripts',
     'allow-top-navigation'
   ],
+  preScript: '',
+  postScript: '',
   templateEditor: {
     value: '',
     mode: 'html',
@@ -375,6 +381,8 @@ StatelessSandbox.propTypes = {
       'allow-top-navigation'
     ])
   ),
+  preScript: PropTypes.string,
+  postScript: PropTypes.string,
   templateEditor: PropTypes.shape({
     value: PropTypes.string,
     mode: PropTypes.oneOf(['html']),

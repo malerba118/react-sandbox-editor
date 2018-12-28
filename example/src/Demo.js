@@ -18,9 +18,9 @@ import 'brace/mode/jsx';
 import 'brace/theme/kuroir';
 
 const ReactSandbox = withDependencies([
-  'https://fb.me/react-15.1.0.js',
-  'https://fb.me/react-dom-15.1.0.js'
-])(Sandbox)
+  "https://unpkg.com/react@16.6.0/umd/react.development.js",
+  "https://unpkg.com/react-dom@16.6.0/umd/react-dom.development.js"
+])(Sandbox);
 
 const toolbarHeight = 64
 

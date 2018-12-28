@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 import {StatelessSandbox} from './StatelessSandbox';
@@ -138,6 +137,8 @@ class Sandbox extends React.Component {
           permissions={this.props.permissions}
           dependencies={this.props.dependencies}
           hideDisplayModeButton={this.props.hideDisplayModeButton}
+          preScript={this.props.preScript}
+          postScript={this.props.postScript}
           templateEditor={{
             ...this.props.templateEditor,
             value: this.state.template.value,
@@ -173,6 +174,8 @@ Sandbox.defaultProps = {
     'allow-scripts',
     'allow-top-navigation'
   ],
+  preScript: '',
+  postScript: '',
   templateEditor: {
     defaultValue: '',
     mode: 'html',
@@ -206,6 +209,8 @@ Sandbox.propTypes = {
       'allow-top-navigation'
     ])
   ),
+  preScript: PropTypes.string,
+  postScript: PropTypes.string,
   templateEditor: PropTypes.shape({
     defaultValue: PropTypes.string,
     mode: PropTypes.oneOf(['html']),
