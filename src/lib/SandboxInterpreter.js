@@ -80,9 +80,9 @@ export class SandboxInterpreter extends React.Component {
   buildContents = () => {
     return (
       `<html>
-        ${this.buildDependencies()}
         ${this.buildStylesheet()}
         ${this.buildTemplate()}
+        ${this.buildDependencies()}
         ${this.buildPreScript()}
         ${this.buildScript()}
         ${this.buildPostScript()}

@@ -21,57 +21,59 @@ class Sandbox extends React.Component {
     displayMode: 'tab',
     template: {
       value: '',
+      defaultValue: ''
     },
     script: {
       value: '',
+      defaultValue: ''
     },
     stylesheet: {
       value: '',
+      defaultValue: ''
     }
   };
 
   componentDidMount() {
-    this.setState({
-      template: {value: this.props.templateEditor.defaultValue},
-      script: {value: this.props.scriptEditor.defaultValue},
-      stylesheet: {value: this.props.stylesheetEditor.defaultValue},
-    })
+    this.props.onRef(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillUnmount() {
+    this.props.onRef(null)
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
     //if default values have changed update editor with new default
+    let nextState = {...prevState}
     if (
-      nextProps.templateEditor.defaultValue !== this.props.templateEditor.defaultValue
+      nextProps.templateEditor.defaultValue !== prevState.template.defaultValue
     ) {
-      this.setState({
-        template: {
-          value: nextProps.templateEditor.defaultValue
-        }
-      })
+      nextState.template = {
+        value: nextProps.templateEditor.defaultValue,
+        defaultValue: nextProps.templateEditor.defaultValue
+      }
     }
     if (
-      nextProps.scriptEditor.defaultValue !== this.props.scriptEditor.defaultValue
+      nextProps.scriptEditor.defaultValue !== prevState.script.defaultValue
     ) {
-      this.setState({
-        script: {
-          value: nextProps.scriptEditor.defaultValue
-        }
-      })
+      nextState.script = {
+        value: nextProps.scriptEditor.defaultValue,
+        defaultValue: nextProps.scriptEditor.defaultValue
+      }
     }
     if (
-      nextProps.stylesheetEditor.defaultValue !== this.props.stylesheetEditor.defaultValue
+      nextProps.stylesheetEditor.defaultValue !== prevState.stylesheet.defaultValue
     ) {
-      this.setState({
-        stylesheet: {
-          value: nextProps.stylesheetEditor.defaultValue
-        }
-      })
+      nextState.script = {
+        value: nextProps.stylesheetEditor.defaultValue,
+        defaultValue: nextProps.stylesheetEditor.defaultValue
+      }
     }
+    return nextState
   }
 
-  onTabClick = (value) => {
-    this.setState({ selectedTab: value });
-    this.props.onTabClick(value)
+  onTabClick = (event, value) => {
+    this.setState({ selectedTab: value })
+    this.props.onTabClick(event, value)
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -86,14 +88,14 @@ class Sandbox extends React.Component {
     }
   }
 
-  onPlayButtonClick = () => {
+  onPlayButtonClick = (event) => {
     this.execute()
-    this.props.onPlayButtonClick()
+    this.props.onPlayButtonClick(event)
   }
 
-  onDisplayModeButtonClick = (requestedMode) => {
+  onDisplayModeButtonClick = (event, requestedMode) => {
     this.setState({displayMode: requestedMode})
-    this.props.onDisplayModeButtonClick(requestedMode)
+    this.props.onDisplayModeButtonClick(event, requestedMode)
   }
 
   execute = () => {
@@ -137,6 +139,7 @@ class Sandbox extends React.Component {
           permissions={this.props.permissions}
           dependencies={this.props.dependencies}
           hideDisplayModeButton={this.props.hideDisplayModeButton}
+          horizontalSplitOffset={this.props.horizontalSplitOffset}
           preScript={this.props.preScript}
           postScript={this.props.postScript}
           templateEditor={{
@@ -194,7 +197,9 @@ Sandbox.defaultProps = {
     readOnly: false,
     wrapLines: false,
   },
-  dependencies: []
+  dependencies: [],
+  horizontalSplitOffset: 50,
+  onRef: () => {},
 }
 
 Sandbox.propTypes = {
@@ -247,6 +252,8 @@ Sandbox.propTypes = {
   selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
   displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),
   dependencies: PropTypes.arrayOf(PropTypes.string),
+  horizontalSplitOffset: PropTypes.number,
+  onRef: PropTypes.func,
 }
 
 export {Sandbox}

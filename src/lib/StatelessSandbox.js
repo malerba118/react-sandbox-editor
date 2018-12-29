@@ -49,6 +49,17 @@ const styles = theme => ({
   }
 });
 
+function getHorizontalSplit(horizontalSplitOffset) {
+  let offset = horizontalSplitOffset
+  if (offset > 80) {
+    offset = 80
+  }
+  if (offset < 20) {
+    offset = 20
+  }
+  return [ offset, 100 - offset ]
+}
+
 //Tabs was trying to pass props to divs and causing warnings
 //this is to prevent those warnings by discarding those props
 const DummyTab = (props) => (
@@ -72,16 +83,15 @@ class StatelessSandbox extends React.Component {
   tabNames = ['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']
 
   onTabClick = (event, index) => {
-    this.props.onTabClick(this.tabNames[index])
+    this.props.onTabClick(event, this.tabNames[index])
   };
 
-  onDisplayModeButtonClick = () => {
-    let requestedDisplayMode = 'tab'
-    if (this.props.displayMode === 'tab') {
-      requestedDisplayMode = 'tab'
-    }
-
-  }
+  // onDisplayModeButtonClick = () => {
+  //   let requestedDisplayMode = 'tab'
+  //   if (this.props.displayMode === 'tab') {
+  //     requestedDisplayMode = 'tab'
+  //   }
+  // }
 
   componentDidMount() {
     this.props.onRef(this)
@@ -98,11 +108,11 @@ class StatelessSandbox extends React.Component {
     this.props.onRef(undefined)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
-      nextProps.displayMode !== this.props.displayMode &&
-      nextProps.displayMode === 'horizontal-split' &&
-      this.props.selectedTab === 'resultTab'
+      prevProps.displayMode !== this.props.displayMode &&
+      this.props.displayMode === 'horizontal-split' &&
+      prevProps.selectedTab === 'resultTab'
     ) {
       //when switching display modes to horizontal split mode while
       //the result tab is selected, we want to wait for the transition
@@ -112,9 +122,6 @@ class StatelessSandbox extends React.Component {
         this.setState({displayModeTranistionPending: false})
       }, 450)
     }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
     if (this.props.executeOnCodeChangeDebounce !== prevProps.executeOnCodeChangeDebounce) {
       // if auto refresh time has changed, change the debounce time
       this.requestInterpreterUpdate = debounce(
@@ -170,7 +177,8 @@ class StatelessSandbox extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const selectedTabName = this.props.selectedTab
+    const selectedTabName = this.props.selectedTab;
+    const horizontalSplit = getHorizontalSplit(this.props.horizontalSplitOffset)
     const tabsClasses = {
       root: classNames(
         classes[`${theme}Header`],
@@ -233,7 +241,7 @@ class StatelessSandbox extends React.Component {
                 className={iconButtonClasses}
                 style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
                 aria-label="sandbox-editor-dispay-mode"
-                onClick={() => this.props.onDisplayModeButtonClick('tab')}
+                onClick={(event) => this.props.onDisplayModeButtonClick(event, 'tab')}
               >
                 <TabDisplayIcon/>
                 {this.props.displayMode === 'tab' && <SplitScreenDisplayIcon />}
@@ -245,7 +253,7 @@ class StatelessSandbox extends React.Component {
                 className={iconButtonClasses}
                 style={{display: this.props.hideDisplayModeButton ? 'none' : ''}}
                 aria-label="sandbox-editor-dispay-mode"
-                onClick={() => this.props.onDisplayModeButtonClick('horizontal-split')}
+                onClick={(event) => this.props.onDisplayModeButtonClick(event, 'horizontal-split')}
               >
                 <SplitScreenDisplayIcon />
               </IconButton>
@@ -268,7 +276,7 @@ class StatelessSandbox extends React.Component {
             className={classes._editor}
             style={{
               zIndex: (selectedTabName === 'templateTab' ? 1 : 0),
-              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? `${horizontalSplit[0]}%` : '100%',
             }}
             onChange={(value) => this.props.onCodeChange('template', value)}
             value={this.props.templateEditor.value}
@@ -280,7 +288,7 @@ class StatelessSandbox extends React.Component {
             className={classes._editor}
             style={{
               zIndex: selectedTabName === 'scriptTab' ? 1 : 0,
-              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? `${horizontalSplit[0]}%` : '100%',
             }}
             onChange={(value) => this.props.onCodeChange('script', value)}
             value={this.props.scriptEditor.value}
@@ -293,7 +301,7 @@ class StatelessSandbox extends React.Component {
             className={classes._editor}
             style={{
               zIndex: (selectedTabName === 'stylesheetTab') && !this.state.displayModeTranistionPending ? 1 : 0,
-              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
+              height: this.props.displayMode === 'horizontal-split' ? `${horizontalSplit[0]}%` : '100%',
             }}
             onChange={(value) => this.props.onCodeChange('stylesheet', value)}
             value={this.props.stylesheetEditor.value}
@@ -305,8 +313,8 @@ class StatelessSandbox extends React.Component {
             onRef={(ref) => {this.interpreterRef = ref}}
             className={classes._interpreter}
             style={{
-              height: this.props.displayMode === 'horizontal-split' ? '50%' : '100%',
-              top: this.props.displayMode === 'horizontal-split' ? '50%' : 0,
+              height: this.props.displayMode === 'horizontal-split' ? `${horizontalSplit[1]}%` : '100%',
+              top: this.props.displayMode === 'horizontal-split' ? `${horizontalSplit[0]}%` : 0,
             }}
             permissions={this.props.permissions}
             dependencies={this.props.dependencies}
@@ -366,7 +374,9 @@ StatelessSandbox.defaultProps = {
     readOnly: false,
     wrapLines: false,
   },
-  dependencies: []
+  dependencies: [],
+  horizontalSplitOffset: 50,
+  onRef: () => {},
 };
 
 StatelessSandbox.propTypes = {
@@ -419,7 +429,8 @@ StatelessSandbox.propTypes = {
   selectedTab: PropTypes.oneOf(['templateTab', 'scriptTab', 'stylesheetTab', 'resultTab']),
   displayMode: PropTypes.oneOf(['tab', 'horizontal-split']),
   dependencies: PropTypes.arrayOf(PropTypes.string),
-  onRef: () => {},
+  horizontalSplitOffset: PropTypes.number,
+  onRef: PropTypes.func,
 }
 
 export {StatelessSandbox}
