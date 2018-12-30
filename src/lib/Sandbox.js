@@ -63,7 +63,7 @@ class Sandbox extends React.Component {
     if (
       nextProps.stylesheetEditor.defaultValue !== prevState.stylesheet.defaultValue
     ) {
-      nextState.script = {
+      nextState.stylesheet = {
         value: nextProps.stylesheetEditor.defaultValue,
         defaultValue: nextProps.stylesheetEditor.defaultValue
       }
