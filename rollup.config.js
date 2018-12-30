@@ -6,6 +6,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import replace from 'rollup-plugin-replace';
 import pkg from './package.json'
+import { plugin as analyze } from 'rollup-plugin-analyzer'
 
 export default {
   external: ['react', 'react-dom', 'prop-types'],
@@ -43,6 +44,7 @@ export default {
     commonjs(),
     replace({
       'process.env.NODE_ENV': JSON.stringify( 'production' )
-    })
+    }),
+    analyze()
   ]
 }

@@ -9,6 +9,8 @@ import Switch from '@material-ui/core/Switch';
 import Input from '@material-ui/core/Input';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
+import Typography from '@material-ui/core/Typography';
+import Slider from 'rc-slider';
 import withStyles from '@material-ui/core/styles/withStyles';
 import brace from 'brace';
 import AceEditor from 'react-ace';
@@ -16,11 +18,12 @@ import {Sandbox, withDependencies} from 'react-sandbox-editor'
 import {getReactSandboxUsage} from './utils'
 import 'brace/mode/jsx';
 import 'brace/theme/kuroir';
+import 'rc-slider/assets/index.css';
 
 const ReactSandbox = withDependencies([
-  'https://fb.me/react-15.1.0.js',
-  'https://fb.me/react-dom-15.1.0.js'
-])(Sandbox)
+  "https://unpkg.com/react@16.6.0/umd/react.development.js",
+  "https://unpkg.com/react-dom@16.6.0/umd/react-dom.development.js"
+])(Sandbox);
 
 const toolbarHeight = 64
 
@@ -38,7 +41,7 @@ const possiblePermissions = [
 const styles = (theme) => ({
   toolbar: {
     height: toolbarHeight,
-    backgroundColor: '#eee'
+    backgroundColor: '#fff',
   },
   globalSettings: {
     width: '100%',
@@ -100,13 +103,14 @@ const styles = (theme) => ({
 class Demo extends Component {
 
   state = {
-    displayMode: 'tab',
     theme: 'solarized_dark',
     headerClass: 'none',
     showDisplayButton: true,
     permissions: possiblePermissions,
     executeOnCodeChange: true,
     executeOnCodeChangeDebounce: 1000,
+    horizontalSplitOffset: 50,
+    displayMode: 'horizontal-split'
   }
 
   onCodeChange = (editorName, value) => {
@@ -125,6 +129,14 @@ class Demo extends Component {
     })
   }
 
+  onHorizontalSplitOffsetChange = (val) => {
+    this.setState({horizontalSplitOffset: val})
+  }
+
+  onDisplayModeButtonClick = (e, val) => {
+    this.setState({displayMode: val})
+  }
+
   render () {
     const {classes} = this.props
     let reactSandbox = (
@@ -133,8 +145,11 @@ class Demo extends Component {
         theme={this.state.theme}
         permissions={this.state.permissions}
         executeOnCodeChange={this.state.executeOnCodeChange}
+        horizontalSplitOffset={this.state.horizontalSplitOffset}
         executeOnCodeChangeDebounce={this.state.executeOnCodeChangeDebounce}
         hideDisplayModeButton={!this.state.showDisplayButton}
+        onDisplayModeButtonClick={this.onDisplayModeButtonClick}
+        displayMode={this.state.displayMode}
         templateEditor={{
           defaultValue: `<div id="root"></div>`,
           mode: 'html',
@@ -147,8 +162,6 @@ class Demo extends Component {
   document.getElementById('root')
 );`,
           mode: 'jsx',
-          readOnly: false,
-          wrapLines: false
         }}
         classes={{header: classes[this.state.headerClass]}}
       />
@@ -263,6 +276,20 @@ class Demo extends Component {
                     ))}
                   </Select>
                 </FormControl>
+              </div>
+              <div id="row-3" className={classes.horizontalForm}>
+                  <FormControl className={classes.formControl} style={{maxWidth: '80%', width: '80%'}}>
+                    <Typography variant="body1">Horizontal Split Offset (no-op when displayMode="tab")</Typography>
+                    <Slider
+                      min={20}
+                      max={80}
+                      defaultValue={this.state.horizontalSplitOffset}
+                      onChange={this.onHorizontalSplitOffsetChange}
+                      railStyle={{backgroundColor: '#f50057', opacity: .5}}
+                      trackStyle={{backgroundColor: '#f50057', opacity: .5}}
+                      handleStyle={{backgroundColor: '#f50057', border: '0'}}
+                    />
+                  </FormControl>
               </div>
             </div>
             <div id="sandbox-usage" className={classes.sandboxUsage}>

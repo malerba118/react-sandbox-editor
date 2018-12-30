@@ -8,10 +8,12 @@ const toolbarHeight = 64
 const styles = (theme) => ({
   toolbar: {
     height: toolbarHeight,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#fff',
+    fontWeight: 100,
     display: 'flex',
     justifyContent: 'start',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderBottom: '1px solid rgba(0,0,0,.08)',
   },
   toolbarLink: {
     textDecoration: 'none',

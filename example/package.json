@@ -7,6 +7,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "prop-types": "^15.6.1",
+    "rc-slider": "^8.6.4",
     "react": "^16.4.0",
     "react-ace": "^6.1.4",
     "react-dom": "^16.4.0",

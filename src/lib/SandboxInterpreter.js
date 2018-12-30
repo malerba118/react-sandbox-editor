@@ -29,6 +29,26 @@ export class SandboxInterpreter extends React.Component {
     return (`<style>${stylesheet}</style>`)
   }
 
+  buildHead = () => {
+    return (
+      `<head>
+        ${this.buildStylesheet()}
+      </head>`
+    )
+  }
+
+  buildPreScript = () => {
+    let preScript = ''
+    let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
+    try {
+      preScript = scriptProcessor(this.props.preScript)
+    }
+    catch (e){
+      console.error(e)
+    }
+    return (`<script>${preScript}</script>`)
+  }
+
   buildScript = () => {
     let script = ''
     let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
@@ -38,7 +58,19 @@ export class SandboxInterpreter extends React.Component {
     catch (e){
       console.error(e)
     }
-    return (`<script type="module">${script}</script>`)
+    return (`<script>${script}</script>`)
+  }
+
+  buildPostScript = () => {
+    let postScript = ''
+    let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
+    try {
+      postScript = scriptProcessor(this.props.postScript)
+    }
+    catch (e){
+      console.error(e)
+    }
+    return (`<script>${postScript}</script>`)
   }
 
   buildTemplate = () => {
@@ -50,16 +82,26 @@ export class SandboxInterpreter extends React.Component {
     catch (e){
       console.error(e)
     }
-    return (`<body>${template}</body>`)
+    return template
+  }
+
+  buildBody = () => {
+    return (
+      `<body>
+        ${this.buildTemplate()}
+        ${this.buildDependencies()}
+        ${this.buildPreScript()}
+        ${this.buildScript()}
+        ${this.buildPostScript()}
+      </body>`
+    )
   }
 
   buildContents = () => {
     return (
       `<html>
-        ${this.buildDependencies()}
-        ${this.buildStylesheet()}
-        ${this.buildTemplate()}
-        ${this.buildScript()}
+        ${this.buildHead()}
+        ${this.buildBody()}
        </html>`
     )
   }
@@ -75,7 +117,9 @@ export class SandboxInterpreter extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
+      prevProps.preScript !== this.props.preScript ||
       prevProps.script !== this.props.script ||
+      prevProps.postScript !== this.props.postScript ||
       prevProps.template !== this.props.template ||
       prevProps.stylesheet !== this.props.stylesheet
     ) {
@@ -131,7 +175,9 @@ SandboxInterpreter.defaultProps = {
     'allow-top-navigation'
   ],
   dependencies: [],
+  preScript: '',
   script: '',
+  postScript: '',
   scriptMode: 'javascript',
   template: '',
   templateMode: 'html',
@@ -153,7 +199,9 @@ SandboxInterpreter.propTypes = {
     ])
   ),
   dependencies: PropTypes.arrayOf(PropTypes.string),
+  preScript: PropTypes.string,
   script: PropTypes.string,
+  postScript: PropTypes.string,
   scriptMode: PropTypes.oneOf(['javascript', 'jsx']),
   template: PropTypes.string,
   templateMode: PropTypes.oneOf(['html']),
