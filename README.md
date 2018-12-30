@@ -182,8 +182,10 @@ Under the hood, code is executed in a sandboxed iframe as follows:
 </iframe>
 ```
 
-##Compatibility
+## Compatibility
+
 Version 1.X.X requires react 15.X.X || 16.X.X and react-dom 15.X.X || 16.X.X
+
 Version 2.X.X requires react >= 16.3.0 and react-dom >= 16.3.0
 
 
