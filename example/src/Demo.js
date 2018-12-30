@@ -103,7 +103,6 @@ const styles = (theme) => ({
 class Demo extends Component {
 
   state = {
-    displayMode: 'tab',
     theme: 'solarized_dark',
     headerClass: 'none',
     showDisplayButton: true,
@@ -111,6 +110,7 @@ class Demo extends Component {
     executeOnCodeChange: true,
     executeOnCodeChangeDebounce: 1000,
     horizontalSplitOffset: 50,
+    displayMode: 'horizontal-split'
   }
 
   onCodeChange = (editorName, value) => {
@@ -133,6 +133,10 @@ class Demo extends Component {
     this.setState({horizontalSplitOffset: val})
   }
 
+  onDisplayModeButtonClick = (e, val) => {
+    this.setState({displayMode: val})
+  }
+
   render () {
     const {classes} = this.props
     let reactSandbox = (
@@ -144,6 +148,8 @@ class Demo extends Component {
         horizontalSplitOffset={this.state.horizontalSplitOffset}
         executeOnCodeChangeDebounce={this.state.executeOnCodeChangeDebounce}
         hideDisplayModeButton={!this.state.showDisplayButton}
+        onDisplayModeButtonClick={this.onDisplayModeButtonClick}
+        displayMode={this.state.displayMode}
         templateEditor={{
           defaultValue: `<div id="root"></div>`,
           mode: 'html',
@@ -155,6 +161,7 @@ class Demo extends Component {
   <h1>Hello, world!</h1>,
   document.getElementById('root')
 );`,
+          mode: 'jsx',
         }}
         classes={{header: classes[this.state.headerClass]}}
       />
@@ -276,6 +283,7 @@ class Demo extends Component {
                     <Slider
                       min={20}
                       max={80}
+                      defaultValue={this.state.horizontalSplitOffset}
                       onChange={this.onHorizontalSplitOffsetChange}
                       railStyle={{backgroundColor: '#f50057', opacity: .5}}
                       trackStyle={{backgroundColor: '#f50057', opacity: .5}}

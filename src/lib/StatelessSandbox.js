@@ -86,13 +86,6 @@ class StatelessSandbox extends React.Component {
     this.props.onTabClick(event, this.tabNames[index])
   };
 
-  // onDisplayModeButtonClick = () => {
-  //   let requestedDisplayMode = 'tab'
-  //   if (this.props.displayMode === 'tab') {
-  //     requestedDisplayMode = 'tab'
-  //   }
-  // }
-
   componentDidMount() {
     this.props.onRef(this)
     // run the interpreter on the initial props

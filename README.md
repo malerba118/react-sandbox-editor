@@ -25,6 +25,12 @@ can include web snippets as flexible React components and not as rigid iframes w
 <br>
 <a href="https://codesandbox.io/s/508957y704" target="_blank">Sandbox Inside Sandbox</a>
 <br>
+<a href="https://codesandbox.io/s/3yn607ypk6" target="_blank">Vue Sandbox</a>
+<br>
+<a href="https://codesandbox.io/s/xry4nlmk6o" target="_blank">TypeScript Sandbox</a>
+<br>
+<a href="https://codesandbox.io/s/40x2kymyr7" target="_blank">PreScript/PostScript Sandbox</a>
+<br>
 
 ## Install
 
@@ -92,11 +98,11 @@ ReactDOM.render(
 );`;
 
 class App extends React.Component {
-  onTabClick = tabName => {
+  onTabClick = (event, tabName) => {
     console.log(tabName);
   };
 
-  onPlayButtonClick = () => {
+  onPlayButtonClick = (event) => {
     console.log("Play button clicked!");
   };
 
@@ -129,6 +135,9 @@ class App extends React.Component {
         executeOnCodeChange={true}
         executeOnCodeChangeDebounce={1000}
         onTabClick={this.onTabClick}
+        displayMode="horizontal-split"
+        hideDisplayModeButton
+        horizontalSplitOffset={60}
         onPlayButtonClick={this.onPlayButtonClick}
         onCodeChange={this.onCodeChange}
         permissions={[
@@ -150,6 +159,33 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
+
+## Sandbox Execution
+Under the hood, code is executed in a sandboxed iframe as follows:
+```
+<iframe>
+  <html>
+    <head>
+      <style>{stylesheetEditorCode}</style>
+    </head>
+    <body>
+      {templateEditorCode}
+      <script src={dependency1}></script>
+      <script src={dependency2}></script>
+      ...
+      <script src={dependencyN}></script>
+      <script>{preScript}</script>
+      <script>{scriptEditorCode}</script>
+      <script>{postScript}</script>
+    </body>
+  </html>
+</iframe>
+```
+
+##Compatibility
+Version 1.X.X requires react 15.X.X || 16.X.X and react-dom 15.X.X || 16.X.X
+Version 2.X.X requires react >= 16.3.0 and react-dom >= 16.3.0
+
 
 ## For local development
 Install nvm <br>

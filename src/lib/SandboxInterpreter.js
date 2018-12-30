@@ -29,6 +29,14 @@ export class SandboxInterpreter extends React.Component {
     return (`<style>${stylesheet}</style>`)
   }
 
+  buildHead = () => {
+    return (
+      `<head>
+        ${this.buildStylesheet()}
+      </head>`
+    )
+  }
+
   buildPreScript = () => {
     let preScript = ''
     let scriptProcessor = processors.getScriptProcessor(this.props.scriptMode)
@@ -74,18 +82,26 @@ export class SandboxInterpreter extends React.Component {
     catch (e){
       console.error(e)
     }
-    return (`<body>${template}</body>`)
+    return template
   }
 
-  buildContents = () => {
+  buildBody = () => {
     return (
-      `<html>
-        ${this.buildStylesheet()}
+      `<body>
         ${this.buildTemplate()}
         ${this.buildDependencies()}
         ${this.buildPreScript()}
         ${this.buildScript()}
         ${this.buildPostScript()}
+      </body>`
+    )
+  }
+
+  buildContents = () => {
+    return (
+      `<html>
+        ${this.buildHead()}
+        ${this.buildBody()}
        </html>`
     )
   }
