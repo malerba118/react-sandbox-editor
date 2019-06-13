@@ -8,6 +8,7 @@ export class SandboxInterpreter extends React.Component {
   constructor(props) {
     super(props)
     this.iframeContainerRef = null
+    this.currentIframe = null
   }
 
   buildDependencies = () => {
@@ -35,6 +36,21 @@ export class SandboxInterpreter extends React.Component {
         ${this.buildStylesheet()}
       </head>`
     )
+  }
+
+  buildCommunication = () => {
+    return (`
+      <script>
+        let _log = console.log
+        console.log = (...arguments) => {
+          window.parent.postMessage({
+            action: 'log',
+            arguments: arguments
+          }, '*')
+          return _log(...arguments)
+        }
+      </script>
+    `)
   }
 
   buildPreScript = () => {
@@ -89,6 +105,7 @@ export class SandboxInterpreter extends React.Component {
     return (
       `<body>
         ${this.buildTemplate()}
+        ${this.buildCommunication()}
         ${this.buildDependencies()}
         ${this.buildPreScript()}
         ${this.buildScript()}
@@ -106,12 +123,23 @@ export class SandboxInterpreter extends React.Component {
     )
   }
 
+  messageListener = e => {
+    if (this.currentIframe && e.source === this.currentIframe.contentWindow) {
+        this.props.onConsoleEvent({
+          action: e.data.action,
+          arguments: e.data.arguments
+        })
+    }
+  }
+
   componentDidMount() {
+    window.addEventListener('message', this.messageListener);
     this.props.onRef(this)
     this.execute()
   }
 
   componentWillUnmount() {
+    window.removeEventListener('message', this.messageListener);
     this.props.onRef(undefined)
   }
 
@@ -134,6 +162,7 @@ export class SandboxInterpreter extends React.Component {
     }
     //create new iframe
     let iframe = document.createElement('iframe');
+    this.currentIframe = iframe
     iframe.height="100%"
     iframe.width="100%"
     iframe.sandbox=this.props.permissions.join(' ')
@@ -183,7 +212,8 @@ SandboxInterpreter.defaultProps = {
   templateMode: 'html',
   stylesheet: '',
   stylesheetMode: 'css',
-  onRef: () => {}
+  onRef: () => {},
+  onConsoleEvent: console.log
 }
 
 SandboxInterpreter.propTypes = {
@@ -207,5 +237,6 @@ SandboxInterpreter.propTypes = {
   templateMode: PropTypes.oneOf(['html']),
   stylesheet: PropTypes.string,
   stylesheetMode: PropTypes.oneOf(['css']),
-  onRef: PropTypes.func
+  onRef: PropTypes.func,
+  onConsoleEvent: PropTypes.func
 }

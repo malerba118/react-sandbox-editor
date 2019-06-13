@@ -46,6 +46,10 @@ const styles = theme => ({
     position: 'absolute',
     top: 0,
     transition: 'height .45s',
+  },
+  _console: {
+    position: 'absolute',
+    top: 0,
   }
 });
 
@@ -320,6 +324,16 @@ class StatelessSandbox extends React.Component {
             stylesheet={this.state.interpreter.stylesheet}
             stylesheetMode={this.props.stylesheetEditor.mode}
           />
+          <div
+            className={classes._console}
+            style={{
+              display: selectedTabName === 'scriptTab' ? 'block' : 'none',
+              height: '100%',
+              zIndex: 2
+            }}
+          >
+            {/* TODO: console component here */}
+          </div>
         </div>
       </div>
     );
