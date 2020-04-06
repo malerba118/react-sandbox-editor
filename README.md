@@ -2,6 +2,8 @@
 
 > React components including a sandbox interpreter and editor
 
+:warning: **I do NOT recommend using this library in production apps as the bundle size is very large due to in-browser transpilation via babel** :warning:
+
 [![NPM](https://img.shields.io/npm/v/react-sandbox-editor.svg)](https://www.npmjs.com/package/react-sandbox-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Overview
